@@ -26,25 +26,33 @@
 
   <h1>Trabajo N°2 | GRAFOS Y LENGUAJES FORMALES </h1>
 
-  <h2>Tipo de Automata</h2>
+  <h2>Largo del Alfabeto</h2><!--Alfabeto-->
+  <input id = "alfabeto" type="number" min="1" max="10" value="1">
+  <button onclick="imprimirAlfabeto(),desactiva_enlace(this);" >Presione para continuar</button>
+  <div id = "alfabetoDescripcion" ></div>
+
+  <h2>Tipo de Automata</h2><!--Tipo (AFD o AFND)-->
   <select id="AFD" name="opciones">
     <option value="1">AFND</option>
     <option value="0">AFD</option>
   </select>
+  
 <div class="Automatas">
-
+<!--Seccion Automatas-->
   <div class="A1">
-    <h2>Automata N°1</h2>
-  <button id = "iniciar" onclick="iniciarAutomata(automata1) ">Continuar</button>
+    <h2>Automata N°1</h2><!--Seccion Automata 1-->
+  <button id = "iniciar" onclick="iniciarAutomata(automata1),desactiva_enlace(this); ">Continuar</button>
+
 </div>
 
   <div class="A2">
-    <h2>Automata N°2</h2>
-  <button id = "iniciar" onclick="iniciarAutomata(automata2) ">Continuar</button>
+    <h2>Automata N°2</h2><!--Seccion Automata 2-->
+  <button id = "iniciar" onclick="iniciarAutomata(automata2),desactiva_enlace(this); ">Continuar</button>
+
 </div>
 
 
-</div>
+</div><!--final automatas-->
 
   
 

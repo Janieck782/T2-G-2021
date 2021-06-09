@@ -4,27 +4,56 @@
 // F = estados = finales
 
 
-//declaracion de automata
+//Declaracion de automata
 const automata = {
-    k : [], //estados 
-    s : [], //alfabeto
-    g : [], //caminos
-    f : [], //final
+    k : [], //estados = q0, q1, q2....
+    s : [], //alfabeto = a, b....
+    g : [], //caminos = ((q0,a)q1), ((q1,b)q0)...
+    f : [], //final = q0, q1, q2....
     afd: null // afnd o afd
 }
 
+let tamañoAlfa = 0;
 
+//Se crean 2 automatas
 const automata1 = Object.assign(automata);
 const automata2 = Object.assign(automata);
 
 
-function iniciarAutomata(automatas){
+
+
+function iniciarAutomata(automatas){//Funcion para iniciar automatas
     automatas.afd = afd();
+    asignarAlfabeto(automatas);
     console.log(automatas);
-    
 
 }
 
+function tamañoAlfabeto(){
+    const aux = document.getElementById("alfabeto").value;
+    return aux;
+}
+
+function asignarAlfabeto(automatas){
+    let aux = tamañoAlfa;
+    automatas.s = []
+    for(let i = 0 ; i<aux ; i++){
+        automatas.s.push(String.fromCharCode(97+i))
+    }
+}
+
+function imprimirAlfabeto(){
+    let aux = tamañoAlfabeto();
+    tamañoAlfa = aux; 
+    let letra = String.fromCharCode(97)
+    document.getElementById("alfabetoDescripcion").innerHTML += ` El abecedario es:`;
+
+    for(let i = 0 ; i<aux ; i++){
+        letra = String.fromCharCode(97+i);
+        document.getElementById("alfabetoDescripcion").innerHTML += ` ${letra},`;
+    }
+    
+}
 
 function afd(){ //Funcion que define AFD o AFND
     const aux = document.getElementById("AFD").value;
@@ -32,6 +61,11 @@ function afd(){ //Funcion que define AFD o AFND
         return true;//AFD      
     }
     else return false;//AFND
+}
+
+function desactiva_enlace(enlace)
+{
+      enlace.disabled='disabled';
 }
 
 window.addEventListener("load", () => {
