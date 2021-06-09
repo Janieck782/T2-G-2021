@@ -1,0 +1,19 @@
+html,
+body {
+  /*font: 11pt arial;*/
+
+  box-sizing: border-box;/*box model*/
+  scroll-snap-type: y proximity;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+
+
+body{
+
+font-family: 'Noto Sans',sans-serif;
+
+}
