@@ -3,15 +3,37 @@
 //gama = caminos = ((q0,a)q1)
 // F = estados = finales
 
+
+//declaracion de automata
 const automata = {
-    k : 0, //estados 
-    s : "", //alfabeto
-    g : 0, //caminos
-    f : 0, //final
+    k : [], //estados 
+    s : [], //alfabeto
+    g : [], //caminos
+    f : [], //final
+    afd: null // afnd o afd
 }
+
 
 const automata1 = Object.assign(automata);
 const automata2 = Object.assign(automata);
 
-console.log(automata1);
-console.log(automata2);
+
+function iniciarAutomata(automatas){
+    automatas.afd = afd();
+    console.log(automatas);
+    
+
+}
+
+
+function afd(){ //Funcion que define AFD o AFND
+    const aux = document.getElementById("AFD").value;
+    if(aux == 0){
+        return true;//AFD      
+    }
+    else return false;//AFND
+}
+
+window.addEventListener("load", () => {
+
+  });

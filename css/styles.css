@@ -17,3 +17,9 @@ body{
 font-family: 'Noto Sans',sans-serif;
 
 }
+
+.Automatas{
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: gray;
+}
