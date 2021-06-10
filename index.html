@@ -41,13 +41,17 @@
 <!--Seccion Automatas-->
   <div class="A1">
     <h2>Automata N°1</h2><!--Seccion Automata 1-->
+    <h4>Ingrese cantidad de estados</h4>
+    <input id = "Q1" type="number" min="2" max="10" value="2">
   <button id = "iniciar" onclick="iniciarAutomata(automata1),desactiva_enlace(this); ">Continuar</button>
 
 </div>
 
   <div class="A2">
     <h2>Automata N°2</h2><!--Seccion Automata 2-->
-  <button id = "iniciar" onclick="iniciarAutomata(automata2),desactiva_enlace(this); ">Continuar</button>
+    <h4>Ingrese cantidad de estados</h4>
+    <input id = "Q2" type="number" min="2" max="10" value="2">
+  <button id = "iniciar" onclick="iniciarAutomata(automata2),desactiva_enlace(this),estados(0,Q2); ">Continuar</button>
 
 </div>
 

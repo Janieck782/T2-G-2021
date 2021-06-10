@@ -26,6 +26,11 @@ function iniciarAutomata(automatas){//Funcion para iniciar automatas
     automatas.afd = afd();
     asignarAlfabeto(automatas);
     console.log(automatas);
+}
+
+function estados(automatas,in){
+    const aux = document.getElementById(in).value;
+    console.log(aux);
 
 }
 
@@ -63,6 +68,10 @@ function afd(){ //Funcion que define AFD o AFND
     else return false;//AFND
 }
 
+
+
+//funciones html
+
 function desactiva_enlace(enlace)
 {
       enlace.disabled='disabled';
@@ -70,4 +79,4 @@ function desactiva_enlace(enlace)
 
 window.addEventListener("load", () => {
 
-  });
+});
