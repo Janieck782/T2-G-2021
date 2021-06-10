@@ -2,7 +2,7 @@
 //sumatoria = alfabeto = a,b
 //gama = caminos = ((q0,a)q1)
 // F = estados = finales
-
+var variable
 
 //Declaracion de automata
 const automata = {
