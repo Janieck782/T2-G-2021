@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trabajo 2 │ GRAFOS Y LENGUAJES FORMALES</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trabajo 2 │ GRAFOS Y LENGUAJES FORMALES</title>
 
   <!--normalize.css-->
   <link rel="preload" href="css/normalize.css" as="style">
@@ -16,8 +17,10 @@
   <link rel="preload" href="css/styles.css" as="style">
   <link rel="stylesheet" href="css/styles.css">
   <!--Bootstrap-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <b src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></b>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <b src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></b>
 
 </head>
 
@@ -26,39 +29,51 @@
 
   <h1>Trabajo N°2 | GRAFOS Y LENGUAJES FORMALES </h1>
 
-  <h2>Largo del Alfabeto</h2><!--Alfabeto-->
-  <input id = "alfabeto" type="number" min="1" max="10" value="1">
-  <button onclick="imprimirAlfabeto(),desactiva_enlace(this);" >Presione para continuar</button>
-  <div id = "alfabetoDescripcion" ></div>
+  <h2>Largo del Alfabeto</h2>
+  <!--Alfabeto-->
 
-  <h2>Tipo de Automata</h2><!--Tipo (AFD o AFND)-->
+  <select name="tipo" id="alfab">
+    <option value="1">Letras</option>
+    <option value="0">Números</option>
+  </select>
+
+  <input id="alfabeto" type="number" min="1" max="10" value="1">
+  <button onclick="imprimirAlfabeto(),desactiva_enlace(this);">Presione para continuar</button>
+  <div id="alfabetoDescripcion"></div>
+
+  <h2>Tipo de Automata</h2>
+  <!--Tipo (AFD o AFND)-->
   <select id="AFD" name="opciones">
     <option value="1">AFND</option>
     <option value="0">AFD</option>
   </select>
-  
-<div class="Automatas">
-<!--Seccion Automatas-->
-  <div class="A1">
-    <h2>Automata N°1</h2><!--Seccion Automata 1-->
-    <h4>Ingrese cantidad de estados</h4>
-    <input id = "Q1" type="number" min="2" max="10" value="2">
-  <button id = "iniciar" onclick="iniciarAutomata(automata1),desactiva_enlace(this); ">Continuar</button>
 
-</div>
+  <div class="Automatas">
+    <!--Seccion Automatas-->
+    <div class="A1">
+      <h2>Automata N°1</h2>
+      <!--Seccion Automata 1-->
+      <h4>Ingrese cantidad de estados</h4>
+      <input id="Q1" type="number" min="2" max="10" value="2">
+      <button id="iniciar" onclick="iniciarAutomata(automata1),desactiva_enlace(this); ">Continuar</button>
 
-  <div class="A2">
-    <h2>Automata N°2</h2><!--Seccion Automata 2-->
-    <h4>Ingrese cantidad de estados</h4>
-    <input id = "Q2" type="number" min="2" max="10" value="2">
-  <button id = "iniciar" onclick="iniciarAutomata(automata2),desactiva_enlace(this),estados(0,Q2); ">Continuar</button>
+    </div>
 
-</div>
+    <div class="A2">
+      <h2>Automata N°2</h2>
+      <!--Seccion Automata 2-->
+      <h4>Ingrese cantidad de estados</h4>
+      <input id="Q2" type="number" min="2" max="10" value="2">
+      <button id="iniciar"
+        onclick="iniciarAutomata(automata2),desactiva_enlace(this),estados(0,Q2); ">Continuar</button>
+
+    </div>
 
 
-</div><!--final automatas-->
+  </div>
+  <!--final automatas-->
 
-  
+
 
 </body>
 
