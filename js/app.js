@@ -30,33 +30,70 @@ function iniciarAutomata(automatas,bol,tabla) { //Funcion para iniciar automatas
     asignarAlfabeto(automatas);
     let tamañoQs = verificarEstados(bol);
     rellenarEstados(automatas,tamañoQs);
-    caminos(tamañoQs,tabla);
+    imprimirEstados(tamañoQs,bol);
+    caminos(automata,tamañoQs,tabla,bol);
     console.log(automatas);
 }
 
-function caminos(estados,tabla){//Funcion que determina los camninos de q STANDBY
-    for(let i = 0 ; i < entrada ; i++ ){
+function caminos(automata,estados,tabla,bol){//Funcion que determina los camninos de q STANDBY
+    let alf = tamañoAlfabeto();
+    var tablas = document.createElement('table');
+    let transiciones = alf * estados;
+    var tablaPadre = document.createElement('table'),
+    filaTitulo = document.createElement('tr');
+
+    for(let g = 0 ; g < transiciones ; g++ ){
+
+    }
+
+    
+    for(let i = 0 ; i < estados ; i++ ){
+        for(let j = 0 ; j < alf ; j++ ){
         const inputNewQ = document.createElement('input');
         inputNewQ.type = "text";
-        tablaTransicion1.appendChild(inputNewQ);
-        // inputNewQ.setAttribute('name', `alf${i}`);
+        tabla.appendChild(inputNewQ);
+
+
+        } 
     }
 } 
+
 
 function verificarEstados(bol){//Funcion que verifica la cantidad de estados
     aux = tamañoEstados(bol);
     if(aux>10){
         return 10;
-    }
+    }else{
+    
     if(aux<1){
         return 1;
     }
     else return aux;
 }
+}
+
+
+function imprimirEstados(estados,bol){//imprime los estados en el html
+    if(bol == 1){
+        document.getElementById("imCami1").innerHTML += `Los estados son:`;
+        for(let i = 0 ; i < estados ; i++){
+            document.getElementById("imCami1").innerHTML += `, q${i}`;
+        }
+        document.getElementById("imCami1").innerHTML += `\n`;
+        
+    }
+    if(bol == 2){
+        document.getElementById("imCami2").innerHTML += `Los estados son:`;
+        for(let j = 0 ; j < estados ; j++){
+            document.getElementById("imCami2").innerHTML += `, q${j}`;
+        }
+        document.getElementById("imCami2").innerHTML += `\n`;
+    }
+}
 
 function rellenarEstados(automatas,estados){//Funcion que rellena los estados
     automatas.k = [];
-    console.log("hay "+estados);
+
     for(let i = 0;i < estados ; i++ ){
         automata.k.push(`q${i}`);
     }
@@ -76,8 +113,18 @@ function tamañoEstados(bol){//Funcion que retorna Qs segun automata
 } 
 
 function tamañoAlfabeto() {//Funcion que recupera el tamaño del alfabeto 
-    const aux = document.getElementById("alfabeto").value;
-    return aux;
+    let aux = document.getElementById("alfabeto").value;
+    if(aux>10){
+        aux=10;
+        return aux;
+    }else{
+    if(aux<1){
+        aux=1;
+        return aux;
+    }
+    else return aux;
+    
+}
 }
 
 function asignarAlfabeto(automatas) {//Funcion que asigna el alfabeto
@@ -98,7 +145,7 @@ function asignarAlfabeto(automatas) {//Funcion que asigna el alfabeto
     }*/
 }
 
-function imprimirAlfabeto() {//Funcion que da a conocer el alfabeto
+function imprimirAlfabeto(){//Funcion que da a conocer el alfabeto
     let aux = tamañoAlfabeto();
     tamañoAlfa = aux;
     //let tipo = tipo_alfa(),
@@ -107,19 +154,12 @@ function imprimirAlfabeto() {//Funcion que da a conocer el alfabeto
     document.getElementById("alfabetoDescripcion").innerHTML += ` El alfabeto es:`;
 
     //if (tipo == false) {
-        if(aux>10){
-            aux=10;
-        }else{
-        if(aux<=0){
-            aux=1;
-        }
-        else{
         for (i = 0; i < aux; i++) {
             letra = String.fromCharCode(97 + i);
-            document.getElementById("alfabetoDescripcion").innerHTML += ` ${letra},`;
+            document.getElementById("alfabetoDescripcion").innerHTML += `, ${letra}`;
         }
     }
-}
+
     /*} else {
         var cont = 0;
         for (i = 0; i < aux; i++) {
@@ -127,7 +167,7 @@ function imprimirAlfabeto() {//Funcion que da a conocer el alfabeto
             cont++;
         }
     }*/
-}
+
 
 function afd() { //Funcion que define AFD o AFND
     const aux = document.getElementById("AFD").value;
@@ -140,8 +180,6 @@ function afd() { //Funcion que define AFD o AFND
     var aux = document.getElementById("alfab").value;
     return aux == 0; //letra
 }*/
-
-
 
 //Funciones HTML
 
