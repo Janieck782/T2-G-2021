@@ -26,12 +26,10 @@ let tamañoAlfa = 0;
 
 //Automata1
 const tablaTransicion1 = document.querySelector("#tablaTransicion1");
-const entrada1 = document.getElementById("entrada1");
+
 
 //Automata2
-const entrada2 = document.getElementById("entrada2");
 const tablaTransicion2 = document.querySelector("#tablaTransicion2");
-
 
 
 //Funciones
@@ -41,10 +39,13 @@ function iniciarAutomata(automatas) { //Funcion para iniciar automatas
     console.log(automatas);
 }
 
-function caminosQs(entrada,tabla){
+function caminosQs1(){
+    for(let i = 0 ; i < 4 ; i++ ){
         const inputNewQ = document.createElement('input');
-        tabla.append(inputNewQ);
-        inputNewQ.setAttribute('name', `q${i}`);
+        tablaTransicion1.append(inputNewQ);
+        inputNewQ.setAttribute('name', `alf${i}`);
+    }
+ console.log("si");
 } 
 
 function tamañoAlfabeto() {//Funcion que recupera el tamaño del alfabeto 
