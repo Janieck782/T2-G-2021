@@ -25,23 +25,22 @@
 </head>
 
 <body>
-  <script src="js/app.js"></script>
 
   <h1>Trabajo N°2 | GRAFOS Y LENGUAJES FORMALES </h1>
 
-  <h2>Largo del Alfabeto</h2>
+  <h2>1.Largo del Alfabeto</h2>
   <!--Alfabeto-->
 
-  <select name="tipo" id="alfab">
+  <!--select name="tipo" id="alfab">
     <option value="1">Letras</option>
     <option value="0">Números</option>
-  </select>
+  </!--select-->
 
   <input id="alfabeto" type="number" min="1" max="10" value="1">
   <button onclick="imprimirAlfabeto(),desactiva_enlace(this);">Presione para continuar</button>
   <div id="alfabetoDescripcion"></div>
 
-  <h2>Tipo de Automata</h2>
+  <h2>2.Tipo de Automata</h2>
   <!--Tipo (AFD o AFND)-->
   <select id="AFD" name="opciones">
     <option value="1">AFND</option>
@@ -53,18 +52,18 @@
     <div class="A1">
       <h2>Automata N°1</h2>
       <!--Seccion Automata 1-->
-      <h4>Ingrese cantidad de estados</h4>
-      <input id="entrada1" type="number" min="2" max="10" value="2">
-      <button id="iniciar1" onclick="iniciarAutomata(automata1),desactiva_enlace(this),caminosQs1(); ">Continuar</button>
+      <h4>3.Ingrese cantidad de estados</h4>
+      <input id="entrada1" type="number" min="1" max="10" value="2">
+      <button id="iniciar1" onclick="iniciarAutomata(automata1,1,caminos1),desactiva_enlace(this); ">Continuar</button>
       <div id="tablaTransicion1"></div>
     </div>
 
     <div class="A2">
       <h2>Automata N°2</h2>
       <!--Seccion Automata 2-->
-      <h4>Ingrese cantidad de estados</h4>
-      <input id="entrada2" type="number" min="2" max="10" value="2">
-      <button id="iniciar2" onclick="iniciarAutomata(automata2),desactiva_enlace(this); ">Continuar</button>
+      <h4>3.Ingrese cantidad de estados</h4>
+      <input id="entrada2" type="number" min="1" max="10" value="1">
+      <button id="iniciar2" onclick="iniciarAutomata(automata2,2,caminos2),desactiva_enlace(this); ">Continuar</button>
       <div id="tablaTransicion2"></div>
     </div>
 
@@ -72,7 +71,8 @@
   </div>
   <!--final automatas-->
 
-
+  <!--JavaScript-->
+  <script src="js/app.js"></script>
 
 </body>
 
