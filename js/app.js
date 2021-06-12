@@ -5,7 +5,8 @@ const automata = {
     g: [], //caminos = ((q0,a)q1), ((q1,b)q0)...
     f: [], //final = q0, q1, q2....
     afd: null // afnd o afd
-}//No modificar
+}//No modificar o correra la sangre...
+
 
 //Se crean 2 automatas
 const automata1 = Object.assign(automata);
@@ -25,7 +26,7 @@ const caminos2 = document.querySelector("#tablaTransicion2");
 let estados2 = 0
 
 //Funciones Formulario
-function iniciarAutomata(automatas,bol,tabla,enlace) { //Funcion para iniciar automatas
+function iniciarAutomata(automatas,bol,tabla,enlace){ //Funcion para iniciar automatas
     if(tamañoAlfa==0){
         alert("Debes Ingresar primero el alfabeto");
     }
@@ -36,34 +37,51 @@ function iniciarAutomata(automatas,bol,tabla,enlace) { //Funcion para iniciar au
     let tamañoQs = verificarEstados(bol);
     rellenarEstados(automatas,tamañoQs);
     imprimirEstados(tamañoQs,bol);
-    caminos(automata,tamañoQs,tabla,bol);
+    inputCaminos(tamañoQs,tabla,bol);
     console.log(automatas);
     }
 }
 
-function caminos(automata,estados,tabla,bol){//Funcion que determina los camninos de q STANDBY
+function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de q STANDBY
     let alf = tamañoAlfabeto();
-    var tablas = document.createElement('table');
-    let transiciones = alf * estados;
-    var tablaPadre = document.createElement('table'),
-    filaTitulo = document.createElement('tr');
+    let letra = (String.fromCharCode(97))
+    let g = 0;
 
-    for(let g = 0 ; g < transiciones ; g++ ){
+    var texto1 = document.createElement("h4");  //crea linea de texto
+    texto1.innerHTML = `4.Ingrese el estado a recorrer de llegada por cada camino.`;   //formato linea
+    tabla.appendChild(texto1);//agrega la linea
 
-    }
-
-    
     for(let i = 0 ; i < estados ; i++ ){
         for(let j = 0 ; j < alf ; j++ ){
-        const inputNewQ = document.createElement('input');
-        inputNewQ.type = "text";
-        tabla.appendChild(inputNewQ);
+            let letra = (String.fromCharCode(97+j))
+            var texto = document.createElement("h4");  //crea linea de texto
+            texto.innerHTML = `${g+1}.(q${i}, ${letra}) :`;   //formato linea
+            tabla.appendChild(texto);//agrega la linea
+            const inputNewQ = document.createElement('input');//crea linea de texto
+            inputNewQ.type = "text";//formato
+            inputNewQ.setAttribute('value',`q${i+1}`);
+            inputNewQ.setAttribute("id",`res-${i}-${j}-${bol}`);//id ¿res-q0-a-automata1?
+            tabla.appendChild(inputNewQ);//agrega
+            //var salto = document.createElement("br");//salto de linea (no hay pa que)
+            //tabla.appendChild(salto);//agrega
+            g++;
+        }
+    } 
+    //falta codigo del boton para confirmar estos datos, Funcion recolectora
+}
 
+function agregarInputs(automatas,estados){
+    //standby.....
+}
 
-        } 
+function verificaQInputs(automatas, valor, estados){
+for(let i = 0 ; i < estados ; i ++ ){
+    if (automatas.k[i] != valor){
+        return false;
     }
-} 
-
+    else return true;
+}   
+}
 
 function verificarEstados(bol){//Funcion que verifica la cantidad de estados
     aux = tamañoEstados(bol);
