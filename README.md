@@ -1,5 +1,7 @@
 # T2-G-2021
 
+* [Version Web](https://quirky-saha-bbadf5.netlify.app) - Version web de la pagina
+
 TRABAJO UNIDAD II: AUTÓMATAS 
 Diseñar una aplicación web (página web) que, en base a los contenidos de la asignatura, permita: 
 1. Ingresar 2 autómatas a la aplicación (pueden ser AFD y/o AFND) 
