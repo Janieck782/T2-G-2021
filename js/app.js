@@ -13,33 +13,46 @@ const automata = {
     afd: null // afnd o afd
 }
 
-let tamañoAlfa = 0;
+
 
 //Se crean 2 automatas
 const automata1 = Object.assign(automata);
 const automata2 = Object.assign(automata);
 
+//Variables
+let tamañoAlfa = 0;
+
+//constantes HTML
+
+//Automata1
+const tablaTransicion1 = document.querySelector("#tablaTransicion1");
+const entrada1 = document.getElementById("entrada1");
+
+//Automata2
+const entrada2 = document.getElementById("entrada2");
+const tablaTransicion2 = document.querySelector("#tablaTransicion2");
 
 
 
+//Funciones
 function iniciarAutomata(automatas) { //Funcion para iniciar automatas
     automatas.afd = afd();
     asignarAlfabeto(automatas);
     console.log(automatas);
 }
 
-function estados(automatas, di) {
-    const aux = document.getElementById(di).value;
-    console.log(aux);
+function caminosQs(entrada,tabla){
+        const inputNewQ = document.createElement('input');
+        tabla.append(inputNewQ);
+        inputNewQ.setAttribute('name', `q${i}`);
+} 
 
-}
-
-function tamañoAlfabeto() {
+function tamañoAlfabeto() {//Funcion que recupera el tamaño del alfabeto 
     const aux = document.getElementById("alfabeto").value;
     return aux;
 }
 
-function asignarAlfabeto(automatas) {
+function asignarAlfabeto(automatas) {//Funcion que asigna el alfabeto
     let aux = tamañoAlfa,
         i;
     var tipo = tipo_alfa(),
@@ -59,7 +72,7 @@ function asignarAlfabeto(automatas) {
     }
 }
 
-function imprimirAlfabeto() {
+function imprimirAlfabeto() {//Funcion que da a conocer el alfabeto
     let aux = tamañoAlfabeto();
     tamañoAlfa = aux;
     var tipo = tipo_alfa(),
@@ -95,7 +108,7 @@ function tipo_alfa() {
 
 
 
-//funciones html
+//Funciones HTML
 
 function desactiva_enlace(enlace) {
     enlace.disabled = 'disabled';
