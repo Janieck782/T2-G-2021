@@ -25,7 +25,12 @@ const caminos2 = document.querySelector("#tablaTransicion2");
 let estados2 = 0
 
 //Funciones Formulario
-function iniciarAutomata(automatas,bol,tabla) { //Funcion para iniciar automatas
+function iniciarAutomata(automatas,bol,tabla,enlace) { //Funcion para iniciar automatas
+    if(tamañoAlfa==0){
+        alert("Debes Ingresar primero el alfabeto");
+    }
+    else{
+    enlace.disabled = 'disabled';
     automatas.afd = afd();
     asignarAlfabeto(automatas);
     let tamañoQs = verificarEstados(bol);
@@ -33,6 +38,7 @@ function iniciarAutomata(automatas,bol,tabla) { //Funcion para iniciar automatas
     imprimirEstados(tamañoQs,bol);
     caminos(automata,tamañoQs,tabla,bol);
     console.log(automatas);
+    }
 }
 
 function caminos(automata,estados,tabla,bol){//Funcion que determina los camninos de q STANDBY
@@ -183,7 +189,7 @@ function afd() { //Funcion que define AFD o AFND
 
 //Funciones HTML
 
-function desactiva_enlace(enlace) {
+function desactiva_enlace(enlace){
     enlace.disabled = 'disabled';
 }
 
