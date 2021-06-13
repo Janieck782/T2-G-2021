@@ -20,12 +20,26 @@ let tamañoAlfa = 0;
 //Automata1
 const caminos1 = document.querySelector("#tablaTransicion1");
 let estados1 = 0
+//variables auxiliares
+let afd1 = null;//asignado
+let trans1 = [];//asignado
+let alfabeto1 = [];//asginado
+let final1 = [];
+let estadosQ1 = [];//asignado
+
 
 //Automata2
 const caminos2 = document.querySelector("#tablaTransicion2");
-let estados2 = 0
+let estados2 = 0;
+//variables auxiliares
+let afd2 = null;//asignado
+let trans2 = [];//asignado
+let alfabeto2 = [];//asignado
+let final2 = [];
+let estadosQ2 = [];//asignado
 
 //Funciones Formulario
+
 function iniciarAutomata(automatas,bol,tabla,enlace){ //Funcion para iniciar automatas
     if(tamañoAlfa==0){
         alert("Debes Ingresar primero el alfabeto");
@@ -33,54 +47,147 @@ function iniciarAutomata(automatas,bol,tabla,enlace){ //Funcion para iniciar aut
     else{
     enlace.disabled = 'disabled';
     automatas.afd = afd();
-    asignarAlfabeto(automatas);
+    if(bol==1){
+        afd1 = afd();
+    }
+    if(bol==2){
+        afd2 = afd();
+    }
+
+    asignarAlfabeto(automatas,bol);
     let tamañoQs = verificarEstados(bol);
-    rellenarEstados(automatas,tamañoQs);
+        if(bol == 1){
+            estados1 = tamañoQs;
+        }
+        if(bol == 2){
+            estados2 = tamañoQs;
+        }
+    rellenarEstados(automatas,tamañoQs,bol);
     imprimirEstados(tamañoQs,bol);
     inputCaminos(tamañoQs,tabla,bol);
     console.log(automatas);
     }
 }
 
+function iniciarCamino(bol,enlace){
+    if (leerInputs(bol) == false){
+
+    }else{
+        enlace.disabled = 'disabled';
+        leerInputs(bol);
+
+
+    }
+}
+
+function inputFinales(bol){
+    
+}
+
 function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de q STANDBY
     let alf = tamañoAlfabeto();
-    let letra = (String.fromCharCode(97))
+    let letra = (String.fromCharCode(97));
     let g = 0;
-
+    
     var texto1 = document.createElement("h4");  //crea linea de texto
     texto1.innerHTML = `4.Ingrese el estado a recorrer de llegada por cada camino.`;   //formato linea
     tabla.appendChild(texto1);//agrega la linea
 
     for(let i = 0 ; i < estados ; i++ ){
         for(let j = 0 ; j < alf ; j++ ){
-            let letra = (String.fromCharCode(97+j))
+            let letra = (String.fromCharCode(97+j));
             var texto = document.createElement("h4");  //crea linea de texto
             texto.innerHTML = `${g+1}.(q${i}, ${letra}) :`;   //formato linea
             tabla.appendChild(texto);//agrega la linea
             const inputNewQ = document.createElement('input');//crea linea de texto
             inputNewQ.type = "text";//formato
-            inputNewQ.setAttribute('value',`q${i+1}`);
+            if(i!= estados-1){inputNewQ.setAttribute('value',`q${i+1}`);}
+            else{inputNewQ.setAttribute('value',`q0`);}
             inputNewQ.setAttribute("id",`res-${i}-${j}-${bol}`);//id ¿res-q0-a-automata1?
             tabla.appendChild(inputNewQ);//agrega
-            //var salto = document.createElement("br");//salto de linea (no hay pa que)
-            //tabla.appendChild(salto);//agrega
+            var salto = document.createElement("br");//salto de linea (no hay pa que)
+            tabla.appendChild(salto);//agrega
             g++;
         }
     } 
     //falta codigo del boton para confirmar estos datos, Funcion recolectora
-}
-
-function agregarInputs(automatas,estados){
-    //standby.....
-}
-
-function verificaQInputs(automatas, valor, estados){
-for(let i = 0 ; i < estados ; i ++ ){
-    if (automatas.k[i] != valor){
-        return false;
+    var btn = document.createElement("BUTTON");   // Create a <button> element
+    btn.innerHTML = "Continuar";    
+    if(bol==1){
+    btn.setAttribute("onclick","iniciarCamino(1,this)");               // Insert text
+    
     }
-    else return true;
+    if(bol==2){
+    btn.setAttribute("onclick","iniciarCamino(2,this)");            // Insert text
+    
+    }
+                // Insert text
+    tabla.appendChild(btn);             // Append <button> to <body>  
+}
+
+function leerInputs(bol){
+
+    let alf = tamañoAlfabeto();
+    let estadoss = 0;
+
+    if(bol == 1){
+        estadoss = estados1;
+        trans1=[];
+    }
+    if(bol == 2){
+        estadoss = estados2;
+        trans1=[];
+    }
+    
+    for(let i = 0 ; i < estadoss; i++){
+        for(let j = 0; j < alf ; j++){
+            let letra = (String.fromCharCode(97+j));
+            let aux = document.getElementById(`res-${i}-${j}-${bol}`).value;
+            console.log(aux);
+            console.log(estadoss);
+            console.log(estadosQ1); 
+            if(bol == 1){
+                if(verificaQInputs(aux,estadosQ1) == true){
+                    trans1.push(aux);
+                }
+                if(verificaQInputs(aux,estadosQ1) == false){
+                    alert(`Q ingresado para (Q${i},${letra}) no es valido`);
+                    trans1=[];
+                    return false;
+                }
+            }
+            if(bol == 2){
+                if(verificaQInputs(aux,estadosQ2) == true){
+                    trans2.push(aux);
+                }
+                if(verificaQInputs(aux,estadosQ2) == false){
+                    alert(`Q ingresado para (Q${i},${letra}) no es valido`);
+                    trans2=[];
+                    return false;
+                }
+            }      
+        }
+    }
+    if(bol==1){
+        automata1.g = trans1;
+        console.log(automata1);
+        return true;
+    }
+    if(bol==2){
+        automata2.g = trans2;
+        console.log(automata1);
+        return true; 
+    }
+
+}
+
+function verificaQInputs( valor,estadoQs){//verifica que q este contenido en el automata
+for(let i = 0 ; i < estadoQs.length ; i ++ ){
+    if (estadoQs[i] == valor){
+        return true;
+    }
 }   
+    return false;
 }
 
 function verificarEstados(bol){//Funcion que verifica la cantidad de estados
@@ -115,11 +222,17 @@ function imprimirEstados(estados,bol){//imprime los estados en el html
     }
 }
 
-function rellenarEstados(automatas,estados){//Funcion que rellena los estados
+function rellenarEstados(automatas,estados,bol){//Funcion que rellena los estados
     automatas.k = [];
 
     for(let i = 0;i < estados ; i++ ){
         automata.k.push(`q${i}`);
+        if(bol==1){
+            estadosQ1.push(`q${i}`);
+        }
+        if(bol==2){
+            estadosQ2.push(`q${i}`);
+        }
     }
 }
 
@@ -151,7 +264,7 @@ function tamañoAlfabeto() {//Funcion que recupera el tamaño del alfabeto
 }
 }
 
-function asignarAlfabeto(automatas) {//Funcion que asigna el alfabeto
+function asignarAlfabeto(automatas,bol) {//Funcion que asigna el alfabeto
     let aux = tamañoAlfa,
         i;
     //var tipo = tipo_alfa(),
@@ -159,8 +272,15 @@ function asignarAlfabeto(automatas) {//Funcion que asigna el alfabeto
     automatas.s = []
    // if (tipo == false) {
         for (i = 0; i < aux; i++) {
-            automatas.s.push(String.fromCharCode(97 + i))
+            automatas.s.push(String.fromCharCode(97 + i));
+            if(bol == 1){
+                alfabeto1.push(String.fromCharCode(97 + i));
+            }
+            if(bol == 2){
+                alfabeto1.push(String.fromCharCode(97 + i));
+            }
         }
+        
     /*} else {
         for (i = 0; i < aux; i++) {
             automatas.s.push(cont);
