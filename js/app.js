@@ -89,7 +89,7 @@ function iniciarCamino(bol, enlace) { // inicia el camino
 }
 
 function inputFinales(bol, conten) { // crea el input final
-    let estadosc;
+    let estadosc = [];
     if (bol == 1) {
         estadosc = estadosQ1;
     }
