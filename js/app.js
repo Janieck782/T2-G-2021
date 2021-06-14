@@ -90,16 +90,16 @@ function iniciarCamino(bol,enlace){// inicia el camino
 }
 
 function inputFinales(bol, conten){ // crea el input final
-  let estadosc;
-  if(bol==1){
+    let estadosc;
+     if(bol==1){
     estadosc = estadosQ1;
-  }
-  if(bol==2){
+    }
+     if(bol==2){
     estadosc = estadosQ2;
-}
+      }
 
     var texto1 = document.createElement("h4");  //crea linea de texto
-    texto1.innerHTML = `5.Selccione los estados finales.`;   //formato linea
+    texto1.innerHTML = `5.Seleccione los estados finales.`;   //formato linea
     conten.appendChild(texto1);//agrega la linea
 
     for(let i = 0 ; i < estadosc.length ; i++){
