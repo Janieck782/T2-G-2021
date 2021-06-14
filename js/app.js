@@ -19,23 +19,25 @@ let tamañoAlfa = 0;
 
 //Automata1
 const caminos1 = document.querySelector("#tablaTransicion1");
+const conFinal1 = document.querySelector("#finalIn1");
 let estados1 = 0
 //variables auxiliares
 let afd1 = null;//asignado
 let trans1 = [];//asignado
 let alfabeto1 = [];//asginado
-let final1 = [];
+let final1 = [];//asignado
 let estadosQ1 = [];//asignado
 
 
 //Automata2
 const caminos2 = document.querySelector("#tablaTransicion2");
+const conFinal2 = document.querySelector("#finalIn2");
 let estados2 = 0;
 //variables auxiliares
 let afd2 = null;//asignado
 let trans2 = [];//asignado
 let alfabeto2 = [];//asignado
-let final2 = [];
+let final2 = [];//asignado
 let estadosQ2 = [];//asignado
 
 //Funciones Formulario
@@ -65,7 +67,6 @@ function iniciarAutomata(automatas,bol,tabla,enlace){ //Funcion para iniciar aut
     rellenarEstados(automatas,tamañoQs,bol);
     imprimirEstados(tamañoQs,bol);
     inputCaminos(tamañoQs,tabla,bol);
-    console.log(automatas);
     }
 }
 
@@ -76,15 +77,103 @@ function iniciarCamino(bol,enlace){
         enlace.disabled = 'disabled';
         leerInputs(bol);
 
+        if(bol == 1){
+            inputFinales(bol,conFinal1);
+        }
+        if(bol == 2){
+            inputFinales(bol,conFinal2);
+        }
 
     }
 }
 
-function inputFinales(bol){
-    
+function inputFinales(bol, conten){
+  let estadosc;
+  if(bol==1){
+    estadosc = estadosQ1;
+  }
+  if(bol==2){
+    estadosc = estadosQ2;
 }
 
-function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de q STANDBY
+    var texto1 = document.createElement("h4");  //crea linea de texto
+    texto1.innerHTML = `5.Selccione los estados finales.`;   //formato linea
+    conten.appendChild(texto1);//agrega la linea
+
+    for(let i = 0 ; i < estadosc.length ; i++){
+        var salto = document.createElement("br");
+        var inp = document.createElement("input");
+        var p = document.createElement("p");
+        p.innerHTML=`Q${i}:`;
+        inp.setAttribute("type","checkbox");
+        inp.setAttribute("id",`q-${i}-${bol}`);
+        conten.appendChild(p);
+        conten.appendChild(inp);
+        conten.appendChild(salto);
+    }
+    var btn = document.createElement("BUTTON");   // Create a <button> element
+    btn.innerHTML = "Continuar";    
+    if(bol==1){
+    btn.setAttribute("onclick","iniciarImagen(1,this)");               // Insert text
+    }
+    if(bol==2){
+    btn.setAttribute("onclick","iniciarImagen(2,this)");            // Insert text
+    }
+                // Insert text
+    conten.appendChild(btn);
+}
+
+function iniciarImagen(bol,enlace){
+    if(asignarFinales(bol) == false){
+        alert("Se debe ingresar al menos un final");
+    }
+    else{
+    enlace.disabled = 'disabled';
+    asignarFinales(bol);
+    if(bol==1){
+        console.log(automata1);
+    }
+    if(bol==2){
+        console.log(automata2);
+    }
+    }
+}
+
+function asignarFinales(bol){
+    let finales = [];
+    let estadosf;
+    if(bol==1){
+        estadosf = estados1;
+    }
+    if(bol==2){
+        estadosf = estados2;
+    }
+    for(let i = 0 ; i < estadosf; i++){
+        let aux = document.getElementById(`q-${i}-${bol}`).checked;
+        if(aux == true){
+        finales.push(`q${i}`);
+        }
+    }
+
+    if(finales.length == 0){
+        return false
+    }else{
+
+    if(bol==1){
+        automata1.f=[];
+        automata1.f=finales;
+        final1 = finales;
+    }
+    if(bol==2){
+        automata2.f=[];
+        automata2.f=finales;
+        final2 = finales;
+    }
+    }
+}
+
+
+function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de q 
     let alf = tamañoAlfabeto();
     let letra = (String.fromCharCode(97));
     let g = 0;
@@ -96,7 +185,7 @@ function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de
     for(let i = 0 ; i < estados ; i++ ){
         for(let j = 0 ; j < alf ; j++ ){
             let letra = (String.fromCharCode(97+j));
-            var texto = document.createElement("h4");  //crea linea de texto
+            var texto = document.createElement("p");  //crea linea de texto
             texto.innerHTML = `${g+1}.(q${i}, ${letra}) :`;   //formato linea
             tabla.appendChild(texto);//agrega la linea
             const inputNewQ = document.createElement('input');//crea linea de texto
@@ -110,7 +199,6 @@ function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de
             g++;
         }
     } 
-    //falta codigo del boton para confirmar estos datos, Funcion recolectora
     var btn = document.createElement("BUTTON");   // Create a <button> element
     btn.innerHTML = "Continuar";    
     if(bol==1){
@@ -125,7 +213,7 @@ function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de
     tabla.appendChild(btn);             // Append <button> to <body>  
 }
 
-function leerInputs(bol){
+function leerInputs(bol){//lee y recolecta los inputs
 
     let alf = tamañoAlfabeto();
     let estadoss = 0;
@@ -143,9 +231,7 @@ function leerInputs(bol){
         for(let j = 0; j < alf ; j++){
             let letra = (String.fromCharCode(97+j));
             let aux = document.getElementById(`res-${i}-${j}-${bol}`).value;
-            console.log(aux);
-            console.log(estadoss);
-            console.log(estadosQ1); 
+
             if(bol == 1){
                 if(verificaQInputs(aux,estadosQ1) == true){
                     trans1.push(aux);
@@ -170,12 +256,10 @@ function leerInputs(bol){
     }
     if(bol==1){
         automata1.g = trans1;
-        console.log(automata1);
         return true;
     }
     if(bol==2){
         automata2.g = trans2;
-        console.log(automata1);
         return true; 
     }
 
