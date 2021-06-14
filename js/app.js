@@ -73,7 +73,7 @@ function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar
 
 function iniciarCamino(bol, enlace) { // inicia el camino
     if (leerInputs(bol) == false) {
-
+        alert(err);
     } else {
         enlace.disabled = 'disabled';
         leerInputs(bol);
@@ -213,7 +213,7 @@ function asignarFinales(bol) { // registra finales
 
 function inputCaminos(estados, tabla, bol) { //Funcion que determina los camninos de q 
     let alf = tamañoAlfabeto();
-    let letra = (String.fromCharCode(97));
+    // let letra = (String.fromCharCode(97));
     let g = 0;
 
     var texto1 = document.createElement("h4"); //crea linea de texto
@@ -316,7 +316,7 @@ function verificaQInputs(valor, estadoQs) { //verifica que q este contenido en e
 }
 
 function verificarEstados(bol) { //Funcion que verifica la cantidad de estados
-    aux = tamañoEstados(bol);
+    var aux = tamañoEstados(bol);
     if (aux > 10) {
         return 10;
     } else {
@@ -391,7 +391,7 @@ function asignarAlfabeto(automatas, bol) { //Funcion que asigna el alfabeto
     let aux = tamañoAlfa,
         i;
     //var tipo = tipo_alfa(),
-    cont = 0;
+    // const cont = 0;
     automatas.s = []
     // if (tipo == false) {
     for (i = 0; i < aux; i++) {
@@ -438,9 +438,7 @@ function imprimirAlfabeto() { //Funcion que da a conocer el alfabeto
 
 function afd() { //Funcion que define AFD o AFND
     const aux = document.getElementById("AFD").value;
-    if (aux == 0) {
-        return true; //AFD      
-    } else return false; //AFND
+    return (aux == 0);
 }
 
 /*function tipo_alfa() {
