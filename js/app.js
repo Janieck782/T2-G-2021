@@ -5,7 +5,7 @@ const automata = {
     g: [], //caminos = ((q0,a)q1), ((q1,b)q0)...
     f: [], //final = q0, q1, q2....
     afd: null // afnd o afd
-}//No modificar o correra la sangre...
+} //No modificar o correra la sangre...
 
 
 //Se crean 2 automatas
@@ -21,12 +21,13 @@ let tamañoAlfa = 0;
 const caminos1 = document.querySelector("#tablaTransicion1");
 const conFinal1 = document.querySelector("#finalIn1");
 let estados1 = 0
+
 //variables auxiliares
-let afd1 = null;//asignado
-let trans1 = [];//asignado
-let alfabeto1 = [];//asginado
-let final1 = [];//asignado
-let estadosQ1 = [];//asignado
+let afd1 = null; //asignado
+let trans1 = []; //asignado
+let alfabeto1 = []; //asignado
+let final1 = []; //asignado
+let estadosQ1 = []; //asignado
 
 
 //Automata2
@@ -34,337 +35,339 @@ const caminos2 = document.querySelector("#tablaTransicion2");
 const conFinal2 = document.querySelector("#finalIn2");
 let estados2 = 0;
 //variables auxiliares
-let afd2 = null;//asignado
-let trans2 = [];//asignado
-let alfabeto2 = [];//asignado
-let final2 = [];//asignado
-let estadosQ2 = [];//asignado
+let afd2 = null; //asignado
+let trans2 = []; //asignado
+let alfabeto2 = []; //asignado
+let final2 = []; //asignado
+let estadosQ2 = []; //asignado
 
 //Funciones Formulario
 
-function iniciarAutomata(automatas,bol,tabla,enlace){ //Funcion para iniciar automatas
-    if(tamañoAlfa==0){
+function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar automatas
+    if (tamañoAlfa == 0) {
         alert("Debes Ingresar primero el alfabeto");
-    }
-    else{
-    enlace.disabled = 'disabled';
-    automatas.afd = afd();
-    if(bol==1){
-        afd1 = afd();
-    }
-    if(bol==2){
-        afd2 = afd();
-    }
+    } else {
+        enlace.disabled = 'disabled';
+        automatas.afd = afd();
+        if (bol == 1) {
+            afd1 = afd();
+        }
+        if (bol == 2) {
+            afd2 = afd();
+        }
 
-    asignarAlfabeto(automatas,bol);
-    let tamañoQs = verificarEstados(bol);
-        if(bol == 1){
+        asignarAlfabeto(automatas, bol);
+        let tamañoQs = verificarEstados(bol);
+        if (bol == 1) {
             estados1 = tamañoQs;
         }
-        if(bol == 2){
+        if (bol == 2) {
             estados2 = tamañoQs;
         }
-    rellenarEstados(automatas,tamañoQs,bol);
-    imprimirEstados(tamañoQs,bol);
-    inputCaminos(tamañoQs,tabla,bol);
+        rellenarEstados(automatas, tamañoQs, bol);
+        imprimirEstados(tamañoQs, bol);
+        inputCaminos(tamañoQs, tabla, bol);
     }
 }
 
-function iniciarCamino(bol,enlace){
-    if (leerInputs(bol) == false){
-
-    }else{
+function iniciarCamino(bol, enlace) {
+    if (leerInputs(bol) == false) {
+        console.error("No ingresado");
+    } else {
         enlace.disabled = 'disabled';
         leerInputs(bol);
 
-        if(bol == 1){
-            inputFinales(bol,conFinal1);
+        if (bol == 1) {
+            inputFinales(bol, conFinal1);
         }
-        if(bol == 2){
-            inputFinales(bol,conFinal2);
+        if (bol == 2) {
+            inputFinales(bol, conFinal2);
         }
-
     }
 }
 
-function inputFinales(bol, conten){
-  let estadosc;
-  if(bol==1){
-    estadosc = estadosQ1;
-  }
-  if(bol==2){
-    estadosc = estadosQ2;
-}
+function inputFinales(bol, conten) {
+    let estadosc = [];
 
-    var texto1 = document.createElement("h4");  //crea linea de texto
-    texto1.innerHTML = `5.Selccione los estados finales.`;   //formato linea
-    conten.appendChild(texto1);//agrega la linea
+    if (bol == 1) {
+        estadosc = estadosQ1;
+    }
+    if (bol == 2) {
+        estadosc = estadosQ2;
+    }
 
-    for(let i = 0 ; i < estadosc.length ; i++){
+    var texto1 = document.createElement("h4"); //crea linea de texto
+    texto1.innerHTML = `5.Seleccione los estados finales.`; //formato linea
+    conten.appendChild(texto1); //agrega la linea
+
+    for (let i = 0; i < estadosc.length; i++) {
         var salto = document.createElement("br");
         var inp = document.createElement("input");
         var p = document.createElement("p");
-        p.innerHTML=`Q${i}:`;
-        inp.setAttribute("type","checkbox");
-        inp.setAttribute("id",`q-${i}-${bol}`);
+        p.innerHTML = `Q${i}:`;
+        inp.setAttribute("type", "checkbox");
+        inp.setAttribute("id", `q-${i}-${bol}`);
         conten.appendChild(p);
         conten.appendChild(inp);
         conten.appendChild(salto);
     }
-    var btn = document.createElement("BUTTON");   // Create a <button> element
-    btn.innerHTML = "Continuar";    
-    if(bol==1){
-    btn.setAttribute("onclick","iniciarImagen(1,this)");               // Insert text
+
+    var btn = document.createElement("BUTTON"); // Create a <button> element
+    btn.innerHTML = "Continuar";
+
+    if (bol == 1) {
+        btn.setAttribute("onclick", "iniciarImagen(1,this)"); // Insert text
     }
-    if(bol==2){
-    btn.setAttribute("onclick","iniciarImagen(2,this)");            // Insert text
+
+    if (bol == 2) {
+        btn.setAttribute("onclick", "iniciarImagen(2,this)"); // Insert text
     }
-                // Insert text
+    // Insert text
     conten.appendChild(btn);
 }
 
-function iniciarImagen(bol,enlace){
-    if(asignarFinales(bol) == false){
+function iniciarImagen(bol, enlace) {
+    if (asignarFinales(bol) == false) {
         alert("Se debe ingresar al menos un final");
-    }
-    else{
-    enlace.disabled = 'disabled';
-    asignarFinales(bol);
-    if(bol==1){
-        console.log(automata1);
-    }
-    if(bol==2){
-        console.log(automata2);
-    }
+    } else {
+        enlace.disabled = 'disabled';
+        asignarFinales(bol);
+        if (bol == 1) {
+            console.log(automata1);
+        }
+        if (bol == 2) {
+            console.log(automata2);
+        }
     }
 }
 
-function asignarFinales(bol){
+function asignarFinales(bol) {
     let finales = [];
     let estadosf;
-    if(bol==1){
+    if (bol == 1) {
         estadosf = estados1;
     }
-    if(bol==2){
+    if (bol == 2) {
         estadosf = estados2;
     }
-    for(let i = 0 ; i < estadosf; i++){
+    for (let i = 0; i < estadosf; i++) {
         let aux = document.getElementById(`q-${i}-${bol}`).checked;
-        if(aux == true){
-        finales.push(`q${i}`);
+        if (aux == true) {
+            finales.push(`q${i}`);
         }
     }
 
-    if(finales.length == 0){
+    if (finales.length == 0) {
         return false
-    }else{
+    } else {
 
-    if(bol==1){
-        automata1.f=[];
-        automata1.f=finales;
-        final1 = finales;
-    }
-    if(bol==2){
-        automata2.f=[];
-        automata2.f=finales;
-        final2 = finales;
-    }
+        if (bol == 1) {
+            automata1.f = [];
+            automata1.f = finales;
+            final1 = finales;
+        }
+        if (bol == 2) {
+            automata2.f = [];
+            automata2.f = finales;
+            final2 = finales;
+        }
     }
 }
 
 
-function inputCaminos(estados,tabla,bol){//Funcion que determina los camninos de q 
+function inputCaminos(estados, tabla, bol) { //Funcion que determina los camninos de q 
     let alf = tamañoAlfabeto();
-    let letra = (String.fromCharCode(97));
+    // let letra = (String.fromCharCode(97));
     let g = 0;
-    
-    var texto1 = document.createElement("h4");  //crea linea de texto
-    texto1.innerHTML = `4.Ingrese el estado a recorrer de llegada por cada camino.`;   //formato linea
-    tabla.appendChild(texto1);//agrega la linea
 
-    for(let i = 0 ; i < estados ; i++ ){
-        for(let j = 0 ; j < alf ; j++ ){
-            let letra = (String.fromCharCode(97+j));
-            var texto = document.createElement("p");  //crea linea de texto
-            texto.innerHTML = `${g+1}.(q${i}, ${letra}) :`;   //formato linea
-            tabla.appendChild(texto);//agrega la linea
-            const inputNewQ = document.createElement('input');//crea linea de texto
-            inputNewQ.type = "text";//formato
-            if(i!= estados-1){inputNewQ.setAttribute('value',`q${i+1}`);}
-            else{inputNewQ.setAttribute('value',`q0`);}
-            inputNewQ.setAttribute("id",`res-${i}-${j}-${bol}`);//id ¿res-q0-a-automata1?
-            tabla.appendChild(inputNewQ);//agrega
-            var salto = document.createElement("br");//salto de linea (no hay pa que)
-            tabla.appendChild(salto);//agrega
+    var texto1 = document.createElement("h4"); //crea linea de texto
+    texto1.innerHTML = `4.Ingrese el estado a recorrer de llegada por cada camino.`; //formato linea
+    tabla.appendChild(texto1); //agrega la linea
+
+    for (let i = 0; i < estados; i++) {
+        for (let j = 0; j < alf; j++) {
+            let letra = (String.fromCharCode(97 + j));
+            var texto = document.createElement("p"); //crea linea de texto
+            texto.innerHTML = `${g+1}.(q${i}, ${letra}) :`; //formato linea
+            tabla.appendChild(texto); //agrega la linea
+            const inputNewQ = document.createElement('input'); //crea linea de texto
+            inputNewQ.type = "text"; //formato
+            if (i != estados - 1) {
+                inputNewQ.setAttribute('value', `q${i+1}`);
+            } else {
+                inputNewQ.setAttribute('value', `q0`);
+            }
+            inputNewQ.setAttribute("id", `res-${i}-${j}-${bol}`); //id ¿res-q0-a-automata1?
+            tabla.appendChild(inputNewQ); //agrega
+            var salto = document.createElement("br"); //salto de linea (no hay pa que)
+            tabla.appendChild(salto); //agrega
             g++;
         }
-    } 
-    var btn = document.createElement("BUTTON");   // Create a <button> element
-    btn.innerHTML = "Continuar";    
-    if(bol==1){
-    btn.setAttribute("onclick","iniciarCamino(1,this)");               // Insert text
-    
     }
-    if(bol==2){
-    btn.setAttribute("onclick","iniciarCamino(2,this)");            // Insert text
-    
+    var btn = document.createElement("BUTTON"); // Create a <button> element
+    btn.innerHTML = "Continuar";
+    if (bol == 1) {
+        btn.setAttribute("onclick", "iniciarCamino(1,this)"); // Insert text
+
     }
-                // Insert text
-    tabla.appendChild(btn);             // Append <button> to <body>  
+    if (bol == 2) {
+        btn.setAttribute("onclick", "iniciarCamino(2,this)"); // Insert text
+
+    }
+    // Insert text
+    tabla.appendChild(btn); // Append <button> to <body>  
 }
 
-function leerInputs(bol){//lee y recolecta los inputs
+function leerInputs(bol) { //lee y recolecta los inputs
 
     let alf = tamañoAlfabeto();
     let estadoss = 0;
 
-    if(bol == 1){
+    if (bol == 1) {
         estadoss = estados1;
-        trans1=[];
+        trans1 = [];
     }
-    if(bol == 2){
+    if (bol == 2) {
         estadoss = estados2;
-        trans1=[];
+        trans1 = [];
     }
-    
-    for(let i = 0 ; i < estadoss; i++){
-        for(let j = 0; j < alf ; j++){
-            let letra = (String.fromCharCode(97+j));
+
+    for (let i = 0; i < estadoss; i++) {
+        for (let j = 0; j < alf; j++) {
+            let letra = (String.fromCharCode(97 + j));
             let aux = document.getElementById(`res-${i}-${j}-${bol}`).value;
 
-            if(bol == 1){
-                if(verificaQInputs(aux,estadosQ1) == true){
+            if (bol == 1) {
+                if (verificaQInputs(aux, estadosQ1) == true) {
                     trans1.push(aux);
                 }
-                if(verificaQInputs(aux,estadosQ1) == false){
+                if (verificaQInputs(aux, estadosQ1) == false) {
                     alert(`Q ingresado para (Q${i},${letra}) no es valido`);
-                    trans1=[];
+                    trans1 = [];
                     return false;
                 }
             }
-            if(bol == 2){
-                if(verificaQInputs(aux,estadosQ2) == true){
+            if (bol == 2) {
+                if (verificaQInputs(aux, estadosQ2) == true) {
                     trans2.push(aux);
                 }
-                if(verificaQInputs(aux,estadosQ2) == false){
+                if (verificaQInputs(aux, estadosQ2) == false) {
                     alert(`Q ingresado para (Q${i},${letra}) no es valido`);
-                    trans2=[];
+                    trans2 = [];
                     return false;
                 }
-            }      
+            }
         }
     }
-    if(bol==1){
+    if (bol == 1) {
         automata1.g = trans1;
         return true;
     }
-    if(bol==2){
+    if (bol == 2) {
         automata2.g = trans2;
-        return true; 
+        return true;
     }
 
 }
 
-function verificaQInputs( valor,estadoQs){//verifica que q este contenido en el automata
-for(let i = 0 ; i < estadoQs.length ; i ++ ){
-    if (estadoQs[i] == valor){
-        return true;
+function verificaQInputs(valor, estadoQs) { //verifica que q este contenido en el automata
+    for (let i = 0; i < estadoQs.length; i++) {
+        if (estadoQs[i] == valor) {
+            return true;
+        }
     }
-}   
     return false;
 }
 
-function verificarEstados(bol){//Funcion que verifica la cantidad de estados
-    aux = tamañoEstados(bol);
-    if(aux>10){
+function verificarEstados(bol) { //Funcion que verifica la cantidad de estados
+    var aux = tamañoEstados(bol);
+    if (aux > 10) {
         return 10;
-    }else{
-    
-    if(aux<1){
-        return 1;
+    } else {
+
+        if (aux < 1) {
+            return 1;
+        } else return aux;
     }
-    else return aux;
-}
 }
 
 
-function imprimirEstados(estados,bol){//imprime los estados en el html
-    if(bol == 1){
+function imprimirEstados(estados, bol) { //imprime los estados en el html
+    if (bol == 1) {
         document.getElementById("imCami1").innerHTML += `Los estados son:`;
-        for(let i = 0 ; i < estados ; i++){
+        for (let i = 0; i < estados; i++) {
             document.getElementById("imCami1").innerHTML += `, q${i}`;
         }
         document.getElementById("imCami1").innerHTML += `\n`;
-        
+
     }
-    if(bol == 2){
+    if (bol == 2) {
         document.getElementById("imCami2").innerHTML += `Los estados son:`;
-        for(let j = 0 ; j < estados ; j++){
+        for (let j = 0; j < estados; j++) {
             document.getElementById("imCami2").innerHTML += `, q${j}`;
         }
         document.getElementById("imCami2").innerHTML += `\n`;
     }
 }
 
-function rellenarEstados(automatas,estados,bol){//Funcion que rellena los estados
+function rellenarEstados(automatas, estados, bol) { //Funcion que rellena los estados
     automatas.k = [];
 
-    for(let i = 0;i < estados ; i++ ){
+    for (let i = 0; i < estados; i++) {
         automata.k.push(`q${i}`);
-        if(bol==1){
+        if (bol == 1) {
             estadosQ1.push(`q${i}`);
         }
-        if(bol==2){
+        if (bol == 2) {
             estadosQ2.push(`q${i}`);
         }
     }
 }
 
-function tamañoEstados(bol){//Funcion que retorna Qs segun automata
+function tamañoEstados(bol) { //Funcion que retorna Qs segun automata
     let g = bol;
     let aux = 9;
-    if(g == 1 ){
+    if (g == 1) {
         aux = document.getElementById("entrada1").value;
         return aux;
     }
-    if(g == 2 ){
+    if (g == 2) {
         aux = document.getElementById("entrada2").value;
         return aux;
     }
-} 
+}
 
-function tamañoAlfabeto() {//Funcion que recupera el tamaño del alfabeto 
+function tamañoAlfabeto() { //Funcion que recupera el tamaño del alfabeto 
     let aux = document.getElementById("alfabeto").value;
-    if(aux>10){
-        aux=10;
+    if (aux > 10) {
+        aux = 10;
         return aux;
-    }else{
-    if(aux<1){
-        aux=1;
-        return aux;
+    } else {
+        if (aux < 1) {
+            aux = 1;
+            return aux;
+        } else return aux;
+
     }
-    else return aux;
-    
-}
 }
 
-function asignarAlfabeto(automatas,bol) {//Funcion que asigna el alfabeto
+function asignarAlfabeto(automatas, bol) { //Funcion que asigna el alfabeto
     let aux = tamañoAlfa,
         i;
     //var tipo = tipo_alfa(),
-        cont = 0;
+    // cont = 0;
     automatas.s = []
-   // if (tipo == false) {
-        for (i = 0; i < aux; i++) {
-            automatas.s.push(String.fromCharCode(97 + i));
-            if(bol == 1){
-                alfabeto1.push(String.fromCharCode(97 + i));
-            }
-            if(bol == 2){
-                alfabeto1.push(String.fromCharCode(97 + i));
-            }
+    // if (tipo == false) {
+    for (i = 0; i < aux; i++) {
+        automatas.s.push(String.fromCharCode(97 + i));
+        if (bol == 1) {
+            alfabeto1.push(String.fromCharCode(97 + i));
         }
-        
+        if (bol == 2) {
+            alfabeto1.push(String.fromCharCode(97 + i));
+        }
+    }
+
     /*} else {
         for (i = 0; i < aux; i++) {
             automatas.s.push(cont);
@@ -373,35 +376,33 @@ function asignarAlfabeto(automatas,bol) {//Funcion que asigna el alfabeto
     }*/
 }
 
-function imprimirAlfabeto(){//Funcion que da a conocer el alfabeto
+function imprimirAlfabeto() { //Funcion que da a conocer el alfabeto
     let aux = tamañoAlfabeto();
     tamañoAlfa = aux;
     //let tipo = tipo_alfa(),
-      let  i;
+    let i;
     let letra = String.fromCharCode(97)
     document.getElementById("alfabetoDescripcion").innerHTML += ` El alfabeto es:`;
 
     //if (tipo == false) {
-        for (i = 0; i < aux; i++) {
-            letra = String.fromCharCode(97 + i);
-            document.getElementById("alfabetoDescripcion").innerHTML += `, ${letra}`;
-        }
+    for (i = 0; i < aux; i++) {
+        letra = String.fromCharCode(97 + i);
+        document.getElementById("alfabetoDescripcion").innerHTML += `, ${letra}`;
     }
+}
 
-    /*} else {
-        var cont = 0;
-        for (i = 0; i < aux; i++) {
-            document.getElementById("alfabetoDescripcion").innerHTML += ` ${cont},`;
-            cont++;
-        }
-    }*/
+/*} else {
+    var cont = 0;
+    for (i = 0; i < aux; i++) {
+        document.getElementById("alfabetoDescripcion").innerHTML += ` ${cont},`;
+        cont++;
+    }
+}*/
 
 
 function afd() { //Funcion que define AFD o AFND
     const aux = document.getElementById("AFD").value;
-    if (aux == 0) {
-        return true; //AFD      
-    } else return false; //AFND
+    return (aux == 0);
 }
 
 /*function tipo_alfa() {
@@ -411,7 +412,7 @@ function afd() { //Funcion que define AFD o AFND
 
 //Funciones HTML
 
-function desactiva_enlace(enlace){
+function desactiva_enlace(enlace) {
     enlace.disabled = 'disabled';
 }
 
