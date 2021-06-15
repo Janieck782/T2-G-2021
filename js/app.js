@@ -28,7 +28,12 @@ let trans1 = []; //asignado
 let alfabeto1 = []; //asginado
 let final1 = []; //asignado
 let estadosQ1 = []; //asignado
+var tamañoQs;
 
+
+
+//Basura
+var Tabla;
 
 //Automata2
 const caminos2 = document.querySelector("#tablaTransicion2");
@@ -58,9 +63,10 @@ function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar
         }
 
         asignarAlfabeto(automatas, bol);
-        let tamañoQs = verificarEstados(bol);
+        tamañoQs = verificarEstados(bol);
         if (bol == 1) {
             estados1 = tamañoQs;
+            console.log(estados1);
         }
         if (bol == 2) {
             estados2 = tamañoQs;
@@ -68,8 +74,133 @@ function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar
         rellenarEstados(automatas, tamañoQs, bol);
         imprimirEstados(tamañoQs, bol);
         inputCaminos(tamañoQs, tabla, bol);
+        console.info("Automata iniciado");
     }
 }
+
+function TablaEstados(automatas, tamanos) {
+    let i, j;
+    var abc, aux2 = 0;
+    console.log("Inicio función tabla de estados");
+    const cant = automatas.k.length;
+    console.log("Cantidad de estados: " + cant);
+    const aux = [];
+    console.log("Tabla de estados vacía: ");
+    console.log(aux);
+
+    for (let i = 0; i < cant; i++) { //Se genera la tabla
+        aux[i] = [];
+        for (let j = 0; j < cant; j++) {
+            aux[i][j] = null;
+        }
+    }
+
+    for (i = 0; i < cant; i++) { //Llena con guinoes los espacios que no se utilizarán
+        abc = aux2;
+        while (abc < cant) {
+            aux[i][abc] = "-";
+            console.log("aca");
+            abc++;
+        }
+        aux2++;
+    }
+    console.log(aux);
+
+    // let finales = JSON.parse(JSON.stringify(automatas.f))
+    // var variable = automatas.f;
+    var validador = [];
+
+    //-------Verificadores--------
+    console.log(automatas.k.length);
+    console.log(automatas.k);
+
+    console.log(automatas.f.length);
+    console.log(automatas.f);
+    //-----------------------------
+
+    var cont = 0;
+
+    for (i = 0; i < automatas.k.length; i++) { //Genera un array con los estados finales (true/false)
+        for (j = 0; j < automatas.f.length; j++) {
+            if (automatas.k[i] == automatas.f[j]) {
+                cont++;
+            }
+        }
+        if (cont == 0) {
+            validador.push(true);
+        } else {
+            validador.push(false);
+        }
+        cont = 0;
+    }
+    console.log(validador); //false son los estados finales
+
+    for (i = 1; i < automatas.k.length; i++) { //Primera columna
+        /**for(j = 0; j < automatas.k.length - 1; j++) {
+            if(validador[i] == validador[j]) {
+
+            }
+        }*/
+        if (validador[i] != validador[0]) {
+            aux[i][0] = "X";
+        }
+    }
+    console.log("Matriz con primeras x: ");
+    console.log(aux);
+
+    var camino_num = Separador_caracter(automatas.g);
+
+    for(i = 0; i < aux.length; i++) {
+        for(j = 1; j < aux[i].length; j++) {
+            if(aux[i][j] != "-") {
+                for(let alf = 0; alf < automatas.s.length; s++) {
+                    aux2 = automatas.k[alf];
+                    if()
+                }
+            }
+        }    
+    }
+    cont = 0;
+    for(let inc = 0; inc < automatas.s.length; inc++) {
+        var fil = automatas.g[i];
+        var col = automatas.g[j];
+        if(aux[fil][col] == "X") {
+            cont++;
+        }
+    }
+    if(cont != 0) {
+        aux[i][j] = "X";
+    }
+    
+
+    // TablaEstadosCompleta(aux, automatas);
+}
+
+// function TablaEstadosCompleta(tabla) {
+//     for(let i = 0; i < automatas.k.length; i++) {
+//         for(let j = 0; j < automatas.k.length; j++) {
+//             for(let z = 0; z < automatas.s.length; z++) {
+//                 if(automatas.g[i] )
+//             }
+//         }
+//     }
+// }
+
+function Separador_caracter(array) {
+    // var aux = JSON.parse( JSON.stringify( array ) );
+    var aux = [];
+    var poo;
+
+    for(let i = 0; i < array.length; i++) {
+        poo = array[i];
+        aux[i] = poo.replace(/\D/g,'');
+    }
+    console.log(aux);
+
+    return aux;
+}
+
+
 
 function iniciarCamino(bol, enlace) { // inicia el camino
     if (leerInputs(bol) == false) {
@@ -84,7 +215,6 @@ function iniciarCamino(bol, enlace) { // inicia el camino
         if (bol == 2) {
             inputFinales(bol, conFinal2);
         }
-
     }
 }
 
@@ -175,6 +305,7 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
     zonaImg.appendChild(texto1); //agrega la linea
     img.setAttribute("src", `https://quickchart.io/graphviz?format=png&width=auto&height=auto&graph=${graph}`);
     zonaImg.appendChild(img);
+    console.info("Imagen automata mostrada");
 }
 
 function asignarFinales(bol) { // registra finales
@@ -208,6 +339,7 @@ function asignarFinales(bol) { // registra finales
             final2 = finales;
         }
     }
+    console.info("Estados finales ingresados");
 }
 
 
@@ -327,7 +459,6 @@ function verificarEstados(bol) { //Funcion que verifica la cantidad de estados
     }
 }
 
-
 function imprimirEstados(estados, bol) { //imprime los estados en el html
     if (bol == 1) {
         document.getElementById("imCami1").innerHTML += `Los estados son:`;
@@ -403,6 +534,7 @@ function asignarAlfabeto(automatas, bol) { //Funcion que asigna el alfabeto
             alfabeto2.push(String.fromCharCode(97 + i));
         }
     }
+    console.info("Alfabeto ingresado");
 
     /*} else {
         for (i = 0; i < aux; i++) {
@@ -425,6 +557,7 @@ function imprimirAlfabeto() { //Funcion que da a conocer el alfabeto
         letra = String.fromCharCode(97 + i);
         document.getElementById("alfabetoDescripcion").innerHTML += `, ${letra}`;
     }
+    console.log("alfabeto desplegado");
 }
 
 /*} else {
@@ -434,7 +567,6 @@ function imprimirAlfabeto() { //Funcion que da a conocer el alfabeto
         cont++;
     }
 }*/
-
 
 function afd() { //Funcion que define AFD o AFND
     const aux = document.getElementById("AFD").value;
