@@ -1,20 +1,29 @@
 //Declaracion de automata
-const automata = {
-    k: [], //estados = q0, q1, q2....
-    s: [], //alfabeto = a, b....
-    g: [], //caminos = ((q0,a)q1), ((q1,b)q0)...
-    label: [], //nombre de los caminos
-    f: [], //final = q0, q1, q2....
-    afd: null // afnd o afd
-} //No modificar o correra la sangre...
+
+class automata{
+    constructor(k,s,g,label,f,afd){
+        this.k = [];
+        this.s = [];
+        this.g = [];
+        this.label = [];
+        this.f = [];
+        this.afd = null;
+    }
+}
+
 
 
 //Se crean 2 automatas
-const automata1 = Object.assign(automata);
-const automata2 = Object.assign(automata);
+let automata1 = new automata;
+let automataAfnd1 = new automata;
+
+let automata2 = new automata;
+let automataAfnd2 = new automata;
+
 
 //Variables
 let tamañoAlfa = 0;
+let automataFinalizado = 0;
 
 //Constantes HTML
 
@@ -46,6 +55,8 @@ let estadosQ2 = []; //asignado
 let estadosCaminoAfnd2 = [];
 
 //Funciones Formulario
+
+
 
 function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar automatas
     if (tamañoAlfa == 0) {
@@ -135,24 +146,40 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
         asignarFinales(bol);
         if (bol == 1) {
             console.log(automata1);
-            imprimirImagen(automata1, zonImg1)
+            imprimirImagen(automata1, zonImg1);
+            //complemento(automata1, zonImg1);
+            
         }
         if (bol == 2) {
             console.log(automata2);
-            imprimirImagen(automata2, zonImg2)
+            imprimirImagen(automata2, zonImg2);
+            //complemento(automata1, zonImg1);
 
         }
+        automataFinalizado++;
+        console.log(automataFinalizado);
+        if(automataFinalizado == 2 ){
+            //unionAutomatas(automata1,automata2);
+        }
+        
     }
 }
 
+
+
+
+
+
 function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas sus parametros son un automata y un contenedor con direccion HTML
-    let graph = "digraph{";
+    
     var img = document.createElement("img");
     let salto = "%20";
     let espacio = "%0A%09"
     let espacio1 = "%20%5Bshape%3Ddoublecircle%5D%3B"
+    let graph = `digraph{ poi -> q0 [color=red,style=dotted] ${salto}`;
     let o = 0;
     let esAfd = automata.afd;
+    
 
 
     if (esAfd == true) {
@@ -174,41 +201,45 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
     if (esAfd == false) {
         if (automatas.k.length == 1) {
             for (let p = 0; p < automatas.s.length; p++) { //alfabeto
-                if(automatas.g[p] == 0){
+                if (automatas.g[p] == 0) {
                     graph += `q0`;
-                }else{
+                } else {
                     graph += `q0 -> q0 [label="${automatas.label[p]}"] ${salto} `;
                 }
-                
+
             }
 
         } else {
             for (let i = 0; i < automatas.k.length; i++) { //estados
-                 for( let j = 0 ; j < automatas.s.length; j++){//alfabeto
-                    if(automatas.g[o] == 0){
-                        
-                    }if(automatas.g[o] != 0){
+                for (let j = 0; j < automatas.s.length; j++) { //alfabeto
+                    if (automatas.g[o] == 0) {
+
+                    }
+                    if (automatas.g[o] != 0) {
                         //k estados, s alfabeto, g caminos, label nombre arista, f final
                         graph += `${automatas.k[i]} -> ${automatas.g[o]} [label="${automatas.label[o]}"] ${salto} `;
-                        
+
                         console.log(o);
                         console.log(i);
                         console.log(j);
 
                     }
                     o++;
-                }    
+                }
             }
         }
 
     }
 
-    for (let q = 0; q < automatas.f.length; q++) {//final
+    for (let q = 0; q < automatas.f.length; q++) { //final
         graph += ` ${espacio} ${automatas.f[q]} ${espacio1}${salto}`
     }
-    graph += "}";
+    graph += "poi[shape=point]}";
 
-    var texto1 = document.createElement("h4"); //crea linea de texto
+   
+
+    var texto1 = document.createElement("h4");
+
     texto1.innerHTML = `6. El resultado es:`; //formato linea
     zonaImg.appendChild(texto1); //agrega la linea
     img.setAttribute("src", `https://quickchart.io/graphviz?format=png&width=auto&height=auto&graph=${graph}`);
@@ -366,7 +397,7 @@ function leerInputs(bol) { //lee y recolecta los inputs --- standBy
     }
     if (bol == 2) {
         estadoss = estados2;
-        trans1 = [];
+        trans2 = [];
     }
 
     if (bol == 1) {
@@ -416,7 +447,7 @@ function leerInputs(bol) { //lee y recolecta los inputs --- standBy
                     if (verificaQInputsAfnd(aux, estadosQ1) == true) {
                         trans1.push(aux);
                         if (casilla == true) {
-                            estadosCaminoAfnd1.push("e")
+                            estadosCaminoAfnd1.push("Eu")
                         }
                         if (casilla == false) {
                             estadosCaminoAfnd1.push(automata1.s[j]);
@@ -433,7 +464,7 @@ function leerInputs(bol) { //lee y recolecta los inputs --- standBy
                     if (verificaQInputsAfnd(aux, estadosQ2) == true) {
                         trans2.push(aux);
                         if (casilla == true) {
-                            estadosCaminoAfnd2.push("e")
+                            estadosCaminoAfnd2.push("Eu")
                         }
                         if (casilla == false) {
                             estadosCaminoAfnd2.push(automata2.s[j]);
@@ -521,7 +552,7 @@ function rellenarEstados(automatas, estados, bol) { //Funcion que rellena los es
     automatas.k = [];
 
     for (let i = 0; i < estados; i++) {
-        automata.k.push(`q${i}`);
+        automatas.k.push(`q${i}`);
         if (bol == 1) {
             estadosQ1.push(`q${i}`);
         }
