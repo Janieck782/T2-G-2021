@@ -41,14 +41,14 @@ background: #9cecfb; /* fallback for old browsers */
   }
 }
 
-
-
-
-
 p{
   display:inline; 
   font-size: 140%;
   }
+
+footer{
+  font-size: 50%;
+}
   
 
 
