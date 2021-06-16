@@ -178,7 +178,7 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
     let espacio1 = "%20%5Bshape%3Ddoublecircle%5D%3B"
     let graph = `digraph{ poi -> q0 [color=red,style=dotted] ${salto}`;
     let o = 0;
-    let esAfd = automata.afd;
+    let esAfd = automatas.afd;
     
 
 
