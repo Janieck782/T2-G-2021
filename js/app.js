@@ -65,13 +65,7 @@ function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar
         alert("Debes Ingresar primero el alfabeto");
     } else {
         enlace.disabled = 'disabled';
-        automatas.afd = afd();
-        if (bol == 1) {
-            afd1 = afd();
-        }
-        if (bol == 2) {
-            afd2 = afd();
-        }
+        automatas.afd = asignarAFD(bol);
 
         asignarAlfabeto(automatas, bol);
         let tamañoQs = verificarEstados(bol);
@@ -253,7 +247,7 @@ function imprimirUnion(automataA,automataB,imgZon){
     for (let u = 0 ; u < automata2.g.length; u++ ){
         automataUnion.g.push(`q${Number.parseInt(automata2.g[u].charAt(1))+automata1.k.length+1}`);
         console.log((automata2.g[u].charAt(1)));
-        console.log(automata1.k.length);
+
         
     }
     console.log(automata1.g.length);
@@ -827,9 +821,16 @@ function imprimirAlfabeto() { //Funcion que da a conocer el alfabeto
 }*/
 
 
-function afd() { //Funcion que define AFD o AFND
-    const aux = document.getElementById("AFD").value;
-    return (aux == 0);
+function asignarAFD(bol) { //Funcion que define AFD o AFND
+    const aux = document.getElementById(`AFD-${bol}`).value;
+
+    if(aux == 0 ){
+        return true;
+    }if(aux == 1){
+        return false;
+    }  
+    
+
 }
 
 /*function tipo_alfa() {
