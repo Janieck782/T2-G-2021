@@ -13,14 +13,15 @@ class automata{
 
 //Se crean 2 automatas
 let automata1 = new automata;
-let automataAfnd1 = new automata;
 
 let automata2 = new automata;
-let automataAfnd2 = new automata;
+
+let automataUnion = new automata;
 
 //Variables
 let tamañoAlfa = 0;
 let automataFinalizado = 0;
+let complemento = [];
 
 //Constantes HTML
 const res = document.querySelector("#Resultados");
@@ -39,7 +40,7 @@ let final1 = []; //asignado
 let estadosQ1 = []; //asignado
 let estadosCaminoAfnd1 = [];
 let complemeto1 = [];//asginado
-let complemento = [];
+
 
 //Automata2
 const caminos2 = document.querySelector("#tablaTransicion2");
@@ -183,7 +184,7 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
         automataFinalizado++;
         console.log(automataFinalizado);
         if(automataFinalizado == 2 ){
-            //imprimirUnion(automata1,automata2,res)
+            imprimirUnion(automata1,automata2,res)
         }
     }
 }
@@ -208,7 +209,70 @@ function transformarAFD(automatas){
 
 
 function imprimirUnion(automataA,automataB,imgZon){
-    let largoEstados = automataA.k+automataB.k;
+    let largoEstados = automataA.k.length+automataB.k.length;
+    let largoAlfabeto = 0;
+    let largoCaminos = automataA.g.length+automataB.g.length;
+    
+    //automataUnion
+    let contQ = 0;
+    //let letra = (String.fromCharCode(97 + i));
+
+    if( automataA.s.length > automataB.s.length ){
+        largoAlfabeto = automataA.s.length;
+    }else{
+        largoAlfabeto = automataB.s.length;
+    }
+
+    for (let q = 0; q < largoAlfabeto; q ++){
+        let letra = (String.fromCharCode(97 + q));
+        automataUnion.s.push(`${letra}`);
+    }
+
+    for (let i = 0; i < largoEstados+1; i++){
+        automataUnion.k.push(`q${i}`);
+    }
+
+
+    automataUnion.g.push(`q1`);//recorremos el automata 1
+    automataUnion.g.push(`q${automata1.k.length+1}`);//recorremos el automata 1
+    automataUnion.label.push(`Eu`);//recorremos el automata 1
+    automataUnion.label.push(`Eu`);//recorremos el automata 1
+    for (let v = 0 ; v < largoAlfabeto-2; v++ ){
+        automataUnion.label.push(0);
+    }
+
+    for (let l = 0 ; l < largoAlfabeto-2; l++ ){
+        automataUnion.g.push(0);
+    }
+
+    for (let v = 0 ; v < automata1.g.length; v++ ){
+        automataUnion.g.push(`q${Number.parseInt(automata1.g[v].charAt(1))+1}`);
+        contQ++;
+    }
+    
+    for (let u = 0 ; u < automata2.g.length; u++ ){
+        automataUnion.g.push(`q${Number.parseInt(automata2.g[u].charAt(1))+automata1.k.length+1}`);
+        console.log((automata2.g[u].charAt(1)));
+        console.log(automata1.k.length);
+        
+    }
+    console.log(automata1.g.length);
+
+    for(let y = 0; y < largoEstados; y++){
+        for(let  t = 0 ; t < largoAlfabeto; t++){
+            automataUnion.label.push(automataUnion.s[t]);
+        }
+    }
+
+    automataUnion.afd = false;
+
+
+    console.log(automataUnion);
+    var texto2 = document.createElement("h4");
+    texto2.innerHTML = ` La union es:`; //formato linea
+    res.appendChild(texto2)
+
+    imprimirImagen(automataUnion,imgZon);
     
 }
 
