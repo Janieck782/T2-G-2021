@@ -23,6 +23,7 @@ background: #9cecfb; /* fallback for old browsers */
 
 }
 
+
 .contenedores{
   background-color: white;
   margin: 10px 10px ;
@@ -59,7 +60,13 @@ p{
 footer{
   font-size: 50%;
 }
+
+h1{
+  font-family: 'Alata', sans-serif;
+
   
+}
+
 
 
 
