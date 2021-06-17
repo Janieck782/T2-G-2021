@@ -41,6 +41,16 @@ background: #9cecfb; /* fallback for old browsers */
   }
 }
 
+@media (min-width: 768px) {
+  .resultados{
+  
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    text-align: center;
+  
+  }
+}
+
 p{
   display:inline; 
   font-size: 140%;

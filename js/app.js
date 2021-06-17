@@ -2,16 +2,14 @@
 
 class automata{
     constructor(k,s,g,label,f,afd){
-        this.k = [];
-        this.s = [];
-        this.g = [];
-        this.label = [];
-        this.f = [];
-        this.afd = null;
+        this.k = [];//estados
+        this.s = [];//alfabeto
+        this.g = [];//caminos inputs
+        this.label = [];//nombre aristas solo afnd
+        this.f = [];//finales
+        this.afd = null;//tipo afd
     }
 }
-
-
 
 //Se crean 2 automatas
 let automata1 = new automata;
@@ -20,17 +18,18 @@ let automataAfnd1 = new automata;
 let automata2 = new automata;
 let automataAfnd2 = new automata;
 
-
 //Variables
 let tamañoAlfa = 0;
 let automataFinalizado = 0;
 
 //Constantes HTML
+const res = document.querySelector("#Resultados");
 
 //Automata1
 const caminos1 = document.querySelector("#tablaTransicion1");
 const conFinal1 = document.querySelector("#finalIn1");
 const zonImg1 = document.querySelector("#imagen1");
+const res1 = document.querySelector("#Resultados1");
 let estados1 = 0
 //variables auxiliares
 let afd1 = null; //asignado
@@ -39,12 +38,14 @@ let alfabeto1 = []; //asginado
 let final1 = []; //asignado
 let estadosQ1 = []; //asignado
 let estadosCaminoAfnd1 = [];
-
+let complemeto1 = [];//asginado
+let complemento = [];
 
 //Automata2
 const caminos2 = document.querySelector("#tablaTransicion2");
 const conFinal2 = document.querySelector("#finalIn2");
 const zonImg2 = document.querySelector("#imagen2");
+const res2 = document.querySelector("#Resultados2");
 let estados2 = 0;
 //variables auxiliares
 let afd2 = null; //asignado
@@ -53,9 +54,9 @@ let alfabeto2 = []; //asignado
 let final2 = []; //asignado
 let estadosQ2 = []; //asignado
 let estadosCaminoAfnd2 = [];
+let complemeto2 = [];//asignado
 
 //Funciones Formulario
-
 
 
 function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar automatas
@@ -125,6 +126,9 @@ function inputFinales(bol, conten) { // crea el input final
         conten.appendChild(p);
         conten.appendChild(inp);
         conten.appendChild(salto);
+        if( i+1 ==  estadosc.length){
+            inp.setAttribute("checked", "true");
+        }
     }
     var btn = document.createElement("BUTTON"); // Create a <button> element
     btn.innerHTML = "Continuar";
@@ -139,6 +143,13 @@ function inputFinales(bol, conten) { // crea el input final
 }
 
 function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
+    var texto1 = document.createElement("h4");
+    texto1.innerHTML = `6. El resultado es:`; //formato linea
+    var texto2 = document.createElement("h4");
+    texto2.innerHTML = ` La transformacion a AFD es:`; //formato linea
+    
+    
+    
     if (asignarFinales(bol) == false) {
         alert("Se debe ingresar al menos un final");
     } else {
@@ -146,27 +157,141 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
         asignarFinales(bol);
         if (bol == 1) {
             console.log(automata1);
+            zonImg1.appendChild(texto1); //agrega la linea
             imprimirImagen(automata1, zonImg1);
-            //complemento(automata1, zonImg1);
+            imprimirComplemento(automata1, res1,1);
+            if(automata1.afd == false){
+                transformarAFD(automata1);
+                res1.appendChild(texto2);
+                imprimirImagen(automata1, res1);
+            }
             
         }
         if (bol == 2) {
             console.log(automata2);
+            zonImg2.appendChild(texto1); //agrega la linea
             imprimirImagen(automata2, zonImg2);
-            //complemento(automata1, zonImg1);
+            imprimirComplemento(automata2,res2,2);
+            if(automata2.afd == false){
+                transformarAFD(automata2);
+                res2.appendChild(texto2);
+                imprimirImagen(automata2, res2);
+            }
+            
 
         }
         automataFinalizado++;
         console.log(automataFinalizado);
         if(automataFinalizado == 2 ){
-            //unionAutomatas(automata1,automata2);
+            //imprimirUnion(automata1,automata2,res)
         }
-        
     }
+}
+
+function transformarAFD(automatas){
+    let c = 0;
+    let k = automatas.k.length;
+    for(let i = 0; i < automatas.g.length;i++ ){
+        if(automatas.g[i]  == 0){
+            if(c == 0){
+                automatas.k.push(`q${k}`)
+                c++;
+                for(let j = 0 ; j < automatas.s.length; j++){
+                    automatas.g.push(`q${k}`);
+                }
+            }
+            automatas.g[i] = `q${k}`
+        }       
+    }
+    automatas.afd = true;
+}
+
+
+function imprimirUnion(automataA,automataB,imgZon){
+    let largoEstados = automataA.k+automataB.k;
+    
 }
 
 
 
+function imprimirComplemento(automatas,zonaImg,bol){
+    var img = document.createElement("img");
+    let salto = "%20";
+    let espacio = "%0A%09"
+    let espacio1 = "%20%5Bshape%3Ddoublecircle%5D%3B"
+    let graph = `digraph{ poi -> q0 [color=red,style=dotted] ${salto}`;
+    let o = 0;
+    let esAfd = automatas.afd;
+    let nuevoF=[];
+
+    
+
+    console.log(nuevoF);
+
+
+    if (esAfd == true) {
+        if (automatas.k.length == 1) {
+            for (let p = 0; p < automatas.s.length; p++) { //alfabeto
+                graph += `q0 -> q0 [label="${automatas.s[p]}"] ${salto} `;
+            }
+
+        } else {
+            for (let i = 0; i < automatas.k.length; i++) { //estados
+                for (let j = 0; j < automatas.s.length; j++) { //alfabeto
+                    graph += `${automatas.k[i]} -> ${automatas.g[o]} [label="${automatas.s[j]}"] ${salto} `;
+                    o++;
+                }
+            }
+        }
+    }
+
+    if (esAfd == false) {
+        if (automatas.k.length == 1) {
+            for (let p = 0; p < automatas.s.length; p++) { //alfabeto
+                if (automatas.g[p] == 0) {
+                    graph += `q0`;
+                } else {
+                    graph += `q0 -> q0 [label="${automatas.label[p]}"] ${salto} `;
+                }
+
+            }
+
+        } else {
+            for (let i = 0; i < automatas.k.length; i++) { //estados
+                for (let j = 0; j < automatas.s.length; j++) { //alfabeto
+                    if (automatas.g[o] == 0) {
+
+                    }
+                    if (automatas.g[o] != 0) {
+                        //k estados, s alfabeto, g caminos, label nombre arista, f final
+                        graph += `${automatas.k[i]} -> ${automatas.g[o]} [label="${automatas.label[o]}"] ${salto} `;
+
+                    }
+                    o++;
+                }
+            }
+        }
+
+    }
+
+    for (let q = 0; q < complemento.length; q++) { //final
+        graph += ` ${espacio} ${complemento[q]} ${espacio1}${salto}`
+    }
+    graph += "poi[shape=point]}";
+
+   
+    var texto2 = document.createElement("h4");
+
+    texto2.innerHTML = `7.Resultados Automata N°${bol}:`; //formato linea
+    zonaImg.appendChild(texto2); //agrega la linea
+
+    var texto1 = document.createElement("h4");
+
+    texto1.innerHTML = `El complemento es:`; //formato linea
+    zonaImg.appendChild(texto1); //agrega la linea
+    img.setAttribute("src", `https://quickchart.io/graphviz?format=png&width=auto&height=auto&graph=${graph}`);
+    zonaImg.appendChild(img);
+}
 
 
 
@@ -219,10 +344,6 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
                         //k estados, s alfabeto, g caminos, label nombre arista, f final
                         graph += `${automatas.k[i]} -> ${automatas.g[o]} [label="${automatas.label[o]}"] ${salto} `;
 
-                        console.log(o);
-                        console.log(i);
-                        console.log(j);
-
                     }
                     o++;
                 }
@@ -238,10 +359,7 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
 
    
 
-    var texto1 = document.createElement("h4");
 
-    texto1.innerHTML = `6. El resultado es:`; //formato linea
-    zonaImg.appendChild(texto1); //agrega la linea
     img.setAttribute("src", `https://quickchart.io/graphviz?format=png&width=auto&height=auto&graph=${graph}`);
     zonaImg.appendChild(img);
 }
@@ -249,6 +367,8 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
 function asignarFinales(bol) { // registra finales
     let finales = [];
     let estadosf;
+    complemento = [];
+
     if (bol == 1) {
         estadosf = estados1;
     }
@@ -260,6 +380,9 @@ function asignarFinales(bol) { // registra finales
         if (aux == true) {
             finales.push(`q${i}`);
         }
+        if (aux == false){
+            complemento.push(`q${i}`);
+        }
     }
 
     if (finales.length == 0) {
@@ -270,11 +393,13 @@ function asignarFinales(bol) { // registra finales
             automata1.f = [];
             automata1.f = finales;
             final1 = finales;
+            complemeto1 = complemento;
         }
         if (bol == 2) {
             automata2.f = [];
             automata2.f = finales;
             final2 = finales;
+            complemeto2 = complemento;
         }
     }
 }
