@@ -289,6 +289,16 @@ function imprimirUnion(automataA,automataB,imgZon){
         }
     }
 
+    for (let v = 0 ; v < automata1.f.length; v++ ){
+        automataUnion.f.push(`q${Number.parseInt(automata1.f[v].charAt(1))+1}`);
+        contQ++;
+    }
+    
+    for (let u = 0 ; u < automata2.f.length; u++ ){
+        automataUnion.f.push(`q${Number.parseInt(automata2.f[u].charAt(1))+automata1.k.length+1}`);
+
+    }
+
     automataUnion.afd = false;
 
 
