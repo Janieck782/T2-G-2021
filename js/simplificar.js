@@ -1,12 +1,12 @@
 function TablaEstados(automatas) {
     let i, j;
     var abc, aux2 = 0;
-    console.log("Inicio función tabla de estados");
+    // console.log("Inicio función tabla de estados");
     const cant = automatas.k.length;
-    console.log("Cantidad de estados: " + cant);
+    // console.log("Cantidad de estados: " + cant);
     const aux = [];
-    console.log("Tabla de estados vacía: ");
-    console.log(aux);
+    // console.log("Tabla de estados vacía: ");
+    // console.log(aux);
 
     for (let i = 0; i < cant; i++) { //Se genera la tabla
         aux[i] = [];
@@ -19,23 +19,21 @@ function TablaEstados(automatas) {
         abc = aux2;
         while (abc < cant) {
             aux[i][abc] = "-";
-            console.log("aca");
             abc++;
         }
         aux2++;
     }
-    console.log(aux);
 
     // let finales = JSON.parse(JSON.stringify(automatas.f))
     // var variable = automatas.f;
     var validador = [];
 
     //-------Verificadores--------
-    console.log(automatas.k.length);
-    console.log(automatas.k);
+    // console.log(automatas.k.length);
+    // console.log(automatas.k);
 
-    console.log(automatas.f.length);
-    console.log(automatas.f);
+    // console.log(automatas.f.length);
+    // console.log(automatas.f);
     //-----------------------------
 
     var cont = 0;
@@ -53,12 +51,11 @@ function TablaEstados(automatas) {
         }
         cont = 0;
     }
-    console.log(validador); //false son los estados finales
+    // console.log(validador); //false son los estados finales
 
-    for (i = 1; i < automatas.k.length; i++) {
+    for (i = 0; i < automatas.k.length; i++) {
         for(j = 0; j < automatas.k.length - 1;j++) {
             if(aux[i][j] == null && aux[i][j] != "x") {
-                console.log("nulo");
                 if(validador[i] != validador[j]) {
                     aux[i][j] = "X";
                 }
@@ -66,8 +63,8 @@ function TablaEstados(automatas) {
         }
     }
 
-    console.log("Matriz con x: ");
-    console.table(aux);
+    // console.log("Matriz con x: ");
+    // console.table(aux);
 
     //------Deja los datos solo con números--------------
     var camino_num = JSON.parse( JSON.stringify( automatas.g ) );
@@ -75,8 +72,6 @@ function TablaEstados(automatas) {
     var estados_num = Separador_caracter(automatas.k);
     estados_num = Separador_caracter(estados_num);
     //----------------------------------------------------
-
-    var camino = tabla_caminos(camino_num, automatas);
 
     var arr_estado = [];
     var sum = 0;
@@ -93,9 +88,12 @@ function TablaEstados(automatas) {
     var tabla_mezclada;
 
     tabla_mezclada = creacion_conj(caminosky, automatas.f);
+    console.table(tabla_mezclada);
 
-    for(i = 1; i < aux.length; i++) {
-        for(j = 1; j < aux.length; j++) {
+    var cont = 1;
+
+    for(i = 0; i < aux.length; i++) {
+        for(j = 0; j < aux.length; j++) {
             if (aux[i][j] != "-" && aux[i][j] != "X") {
                 for(let a = 0; a < tabla_mezclada.length; a++) {
                     if(tabla_mezclada[i][a] != tabla_mezclada[j][a]) {
@@ -106,9 +104,35 @@ function TablaEstados(automatas) {
             }
         }
     }
+    var aux2 = JSON.parse( JSON.stringify( aux ) );
+    console.log("Aux 2");
+    console.table(aux2);
+
+
+    for(i = 0; i < aux.length; i++) {
+        for(j = 0; j < aux.length; j++) {
+            if(aux[i][j] == null) {
+                for(let b = 0; b < automatas.s.length; b++) {
+                    var pri = caminosky[i][b];
+                    var seg = caminosky[j][b];
+                    pri = pri.slice(1);
+                    seg = seg.slice(1);
+                    console.log(pri + " " + seg);
+
+                    if(aux2[pri][seg] == "X" || aux2 [seg][pri] == "X") {
+                        aux[i][j] = "X";
+                    }
+                }
+            }
+        }
+    }
+
+    console.table(aux);
 
  
     var aiuda = [];
+    console.log("Caminos antes del problema: ");
+    console.table(caminosky)
 
     for(i = 0; i < aux.length; i++) {
         for(j = 0; j < aux.length; j++) {
@@ -122,7 +146,7 @@ function TablaEstados(automatas) {
                 for(let a = 0; a < caminosky.length; a++) {
                     for(let b = 0; b < automatas.s.length; b++) {
                         if(caminosky[a][b] == aux1) {
-                            caminosky[a][b] = "q" + b;
+                            caminosky[a][b] = "q" + j;
                         }
                     }
                 }
@@ -130,8 +154,10 @@ function TablaEstados(automatas) {
         }
     }
 
-    console.log(aiuda);
 
+
+    console.log("Caminos antes del problema: ");
+    console.table(caminosky)
 
     //Crea una matriz bidemensional con una columna con id de cada camino
     caminosky2 = new Array(automatas.k.length);
@@ -140,18 +166,21 @@ function TablaEstados(automatas) {
     let aiuda2 = aiuda.filter((item,index)=>{
         return aiuda.indexOf(item) === index;
     })
+    console.log("Aiuda 2 normal: ");
     console.log(aiuda2);
 
     aiuda2.reverse();
+    console.log("Aiuda2 reverso: ");
+    console.log(aiuda2);
 
     for(i = 0; i < aiuda2.length; i++) {
         caminosky.splice(aiuda2[i], 1);
     }
 
-    console.log("estados: ");
+    console.log("Estados: ");
     console.table(automatas.k);
 
-    console.log("finales: ");
+    console.log("Finales: ");
     console.table(automatas.f);
 
     console.log("Caminosky: ");
