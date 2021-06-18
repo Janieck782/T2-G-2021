@@ -57,12 +57,36 @@ let estadosQ2 = []; //asignado
 let estadosCaminoAfnd2 = [];
 let complemeto2 = [];//asignado
 
-//Funciones Formulario
+//logs
+// Creamos el almacenamiento. De momento el único almacenamiento persistente es 
+// LocalStorage, pero es fácil definir alternativas basadas en WebSQL, IndexedDB, etc.
+var storage = new plog.storages.LocalStorage({maxSize: 200})
+ 
+// Configuramos plog para que use el almacenamiento que acabamos de crear
+plog.useStorage(storage);
+ 
+// Establecemos el nivel de detalle que queramos entre DEBUG, INFO, WARN, ERROR, FATAL
+//plog.setLevel(plog.level.INFO);
+ 
+// Escribimos mensajes en el log
+//plog.debug('debug message');
+//plog.info('info message');
+//plog.warn('warn message');
+//plog.error('error message');
+//plog.fatal('fatal message');
 
+
+ 
+// Cuando queramos, podemos recuperar los mensajes que se han añadido al log
+var events = storage.getEvents();
+console.log(events);
+
+//Funciones Formulario
 
 function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar automatas
     if (tamañoAlfa == 0) {
         alert("Debes Ingresar primero el alfabeto");
+        plog.warn("Se intento continuar sin alfabeto");
     } else {
         enlace.disabled = 'disabled';
         automatas.afd = asignarAFD(bol);
@@ -78,15 +102,18 @@ function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar
         rellenarEstados(automatas, tamañoQs, bol);
         imprimirEstados(tamañoQs, bol);
         inputCaminos(tamañoQs, tabla, bol);
+        plog.info("Se creo un automata");
     }
 }
 
 function iniciarCamino(bol, enlace) { // inicia el camino
     if (leerInputs(bol) == false) {
         alert(err);
+        plog.warn("Uno de los datos ingresado no es correcto");
     } else {
         enlace.disabled = 'disabled';
         leerInputs(bol);
+        plog.info("Se almacenaron los datos ingresados");
 
         if (bol == 1) {
             inputFinales(bol, conFinal1);
@@ -147,6 +174,7 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
     
     if (asignarFinales(bol) == false) {
         alert("Se debe ingresar al menos un final");
+        plog.warn("Se intento contninuar sin al menos un final");
     } else {
         enlace.disabled = 'disabled';
         asignarFinales(bol);
@@ -176,9 +204,12 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
 
         }
         automataFinalizado++;
-        console.log(automataFinalizado);
+        plog.info(`Se finalizo el automata N°${bol}`);
+
         if(automataFinalizado == 2 ){
             imprimirUnion(automata1,automata2,res)
+            plog.info("Se genero la union de dos automatas")
+
         }
     }
 }
@@ -246,11 +277,11 @@ function imprimirUnion(automataA,automataB,imgZon){
     
     for (let u = 0 ; u < automata2.g.length; u++ ){
         automataUnion.g.push(`q${Number.parseInt(automata2.g[u].charAt(1))+automata1.k.length+1}`);
-        console.log((automata2.g[u].charAt(1)));
+
 
         
     }
-    console.log(automata1.g.length);
+
 
     for(let y = 0; y < largoEstados; y++){
         for(let  t = 0 ; t < largoAlfabeto; t++){
@@ -284,7 +315,7 @@ function imprimirComplemento(automatas,zonaImg,bol){
 
     
 
-    console.log(nuevoF);
+ 
 
 
     if (esAfd == true) {
