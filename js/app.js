@@ -18,8 +18,7 @@ let automata2 = new automata;
 
 let automataUnion = new automata;
 
-let automataNoSimp1 = new automata;
-let automataNoSimp2 = new automata;
+
 
 //Variables
 let tamañoAlfa = 0;
@@ -173,8 +172,9 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
     var texto2 = document.createElement("h4");
     texto2.innerHTML = ` La transformacion a AFD es:`; //formato linea
     var texto3 = document.createElement("h4");
-    texto3.innerHTML = `7. La simplificacion es:`; //formato linea
-    
+    texto3.innerHTML = ` La simplificacion es:`; //formato linea
+    var texto4 = document.createElement("h4");
+    texto4.innerHTML = ` La simplificacion es:`; //formato linea
     
     
     if (asignarFinales(bol) == false) {
@@ -196,11 +196,7 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
             
             }
 
-            //simplificacion
             
-            TablaEstados(automata1);
-            res1.appendChild(texto3);
-            imprimirImagen(automata1, res1);
             
         }
         if (bol == 2) {
@@ -215,18 +211,30 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
             }
             //simplificacion
             
-            TablaEstados(automata2);
-            res2.appendChild(texto3);
-            imprimirImagen(automata2, res2);
-            
 
         }
         automataFinalizado++;
         plog.info(`Se finalizo el automata N°${bol}`);
 
         if(automataFinalizado == 2 ){
-            imprimirUnion(automataNoSimp1,automataNoSimp2,res)
-            plog.info("Se genero la union de dos automatas")
+            imprimirUnion(automata1,automata2,res);
+            plog.info("Se genero la union de dos automatas");
+
+            //simplificaciion
+
+            //1
+            TablaEstados(automata1);
+            TablaEstados(automata2);
+            res1.appendChild(texto3);
+            res2.appendChild(texto4);
+            console.log(automata2)
+            imprimirImagen(automata1, res1);
+            imprimirImagen(automata2, res2);
+
+            //2
+            
+            
+            
 
         }
     }
