@@ -18,6 +18,9 @@ let automata2 = new automata;
 
 let automataUnion = new automata;
 
+let automataNoSimp1 = new automata;
+let automataNoSimp2 = new automata;
+
 //Variables
 let tamañoAlfa = 0;
 let automataFinalizado = 0;
@@ -169,6 +172,8 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
     texto1.innerHTML = `6. El resultado es:`; //formato linea
     var texto2 = document.createElement("h4");
     texto2.innerHTML = ` La transformacion a AFD es:`; //formato linea
+    var texto3 = document.createElement("h4");
+    texto3.innerHTML = `7. La simplificacion es:`; //formato linea
     
     
     
@@ -183,11 +188,19 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
             zonImg1.appendChild(texto1); //agrega la linea
             imprimirImagen(automata1, zonImg1);
             imprimirComplemento(automata1, res1,1);
+
             if(automata1.afd == false){
                 transformarAFD(automata1);
                 res1.appendChild(texto2);
                 imprimirImagen(automata1, res1);
+            
             }
+
+            //simplificacion
+            
+            TablaEstados(automata1);
+            res1.appendChild(texto3);
+            imprimirImagen(automata1, res1);
             
         }
         if (bol == 2) {
@@ -200,6 +213,11 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
                 res2.appendChild(texto2);
                 imprimirImagen(automata2, res2);
             }
+            //simplificacion
+            
+            TablaEstados(automata2);
+            res2.appendChild(texto3);
+            imprimirImagen(automata2, res2);
             
 
         }
@@ -207,7 +225,7 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
         plog.info(`Se finalizo el automata N°${bol}`);
 
         if(automataFinalizado == 2 ){
-            imprimirUnion(automata1,automata2,res)
+            imprimirUnion(automataNoSimp1,automataNoSimp2,res)
             plog.info("Se genero la union de dos automatas")
 
         }
