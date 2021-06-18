@@ -88,7 +88,7 @@ function TablaEstados(automatas) {
     var tabla_mezclada;
 
     tabla_mezclada = creacion_conj(caminosky, automatas.f);
-    console.table(tabla_mezclada);
+
 
     var cont = 1;
 
@@ -124,7 +124,7 @@ function TablaEstados(automatas) {
         }
     }
 
-    console.table(aux);
+
 
  
     var aiuda = [];
