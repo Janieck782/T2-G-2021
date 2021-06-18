@@ -1,4 +1,4 @@
-# T2-G-2021
+# T2-G-2021 Automatas
 * [Version Web](https://t2-g-2021-grafos.netlify.app/) - Version web de la pagina
 
 TRABAJO UNIDAD II: AUTÓMATAS 
