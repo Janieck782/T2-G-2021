@@ -105,8 +105,6 @@ function TablaEstados(automatas) {
         }
     }
     var aux2 = JSON.parse( JSON.stringify( aux ) );
-    console.log("Aux 2");
-    console.table(aux2);
 
 
     for(i = 0; i < aux.length; i++) {
@@ -117,7 +115,6 @@ function TablaEstados(automatas) {
                     var seg = caminosky[j][b];
                     pri = pri.slice(1);
                     seg = seg.slice(1);
-                    console.log(pri + " " + seg);
 
                     if(aux2[pri][seg] == "X" || aux2 [seg][pri] == "X") {
                         aux[i][j] = "X";
@@ -131,8 +128,7 @@ function TablaEstados(automatas) {
 
  
     var aiuda = [];
-    console.log("Caminos antes del problema: ");
-    console.table(caminosky)
+
 
     for(i = 0; i < aux.length; i++) {
         for(j = 0; j < aux.length; j++) {
@@ -156,8 +152,7 @@ function TablaEstados(automatas) {
 
 
 
-    console.log("Caminos antes del problema: ");
-    console.table(caminosky)
+
 
     //Crea una matriz bidemensional con una columna con id de cada camino
     caminosky2 = new Array(automatas.k.length);
@@ -166,25 +161,16 @@ function TablaEstados(automatas) {
     let aiuda2 = aiuda.filter((item,index)=>{
         return aiuda.indexOf(item) === index;
     })
-    console.log("Aiuda 2 normal: ");
-    console.log(aiuda2);
+
 
     aiuda2.reverse();
-    console.log("Aiuda2 reverso: ");
-    console.log(aiuda2);
+
 
     for(i = 0; i < aiuda2.length; i++) {
         caminosky.splice(aiuda2[i], 1);
     }
 
-    console.log("Estados: ");
-    console.table(automatas.k);
 
-    console.log("Finales: ");
-    console.table(automatas.f);
-
-    console.log("Caminosky: ");
-    console.table(caminosky);
 
     automatas.g = [];
 
@@ -264,7 +250,7 @@ function Separador_caracter(array) {
         poo = array[i];
         aux[i] = poo.replace(/\D/g,'');
     }
-    console.log(aux);
+
 
     return aux;
 }

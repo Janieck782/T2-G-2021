@@ -1,5 +1,7 @@
 //Declaracion de automata
 
+const plog = require("./plog");
+
 class automata{
     constructor(k,s,g,label,f,afd){
         this.k = [];//estados
@@ -227,7 +229,7 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
             TablaEstados(automata2);
             res1.appendChild(texto3);
             res2.appendChild(texto4);
-            console.log(automata2)
+            plog.info("Se simplificaron los automatas");
             imprimirImagen(automata1, res1);
             imprimirImagen(automata2, res2);
 
