@@ -77,9 +77,6 @@ function TablaEstados(automatas) {
     //----------------------------------------------------
 
     var camino = tabla_caminos(camino_num, automatas);
-    console.log(camino);
-
-    console.log(aux);
 
     var arr_estado = [];
     var sum = 0;
@@ -92,12 +89,10 @@ function TablaEstados(automatas) {
     }
 
     var caminosky = tabla_caminos(automatas.g, automatas);
-    console.table(caminosky);
 
     var tabla_mezclada;
 
     tabla_mezclada = creacion_conj(caminosky, automatas.f);
-    console.table(tabla_mezclada);
 
     for(i = 1; i < aux.length; i++) {
         for(j = 1; j < aux.length; j++) {
@@ -112,17 +107,14 @@ function TablaEstados(automatas) {
         }
     }
 
-    var auxilio = [];
-    for(i = 0; i < caminosky.length; i++) {
-        auxilio[i] = [];
-    }
-
-    console.table(aux);
+ 
+    var aiuda = [];
 
     for(i = 0; i < aux.length; i++) {
         for(j = 0; j < aux.length; j++) {
             if(aux[i][j] == null) {
                 var aux1 = "q" + i;
+                aiuda.push(i);
 
                 removeItemFromArr(automatas.k , aux1);
                 removeItemFromArr(automatas.f , aux1);
@@ -130,7 +122,7 @@ function TablaEstados(automatas) {
                 for(let a = 0; a < caminosky.length; a++) {
                     for(let b = 0; b < automatas.s.length; b++) {
                         if(caminosky[a][b] == aux1) {
-                            caminosky[a][b] = "q" + a;
+                            caminosky[a][b] = "q" + b;
                         }
                     }
                 }
@@ -138,13 +130,23 @@ function TablaEstados(automatas) {
         }
     }
 
-    for(i = 0; i < caminosky.length; i++) {
-        for(j = 0; j < caminosky.length; j++) {
-            
-        }
-    }
+    console.log(aiuda);
 
-    removeItemFromArr(automatas.f , aux1);
+
+    //Crea una matriz bidemensional con una columna con id de cada camino
+    caminosky2 = new Array(automatas.k.length);
+    var cont = 0, aca = 0;
+
+    let aiuda2 = aiuda.filter((item,index)=>{
+        return aiuda.indexOf(item) === index;
+    })
+    console.log(aiuda2);
+
+    aiuda2.reverse();
+
+    for(i = 0; i < aiuda2.length; i++) {
+        caminosky.splice(aiuda2[i], 1);
+    }
 
     console.log("estados: ");
     console.table(automatas.k);
