@@ -1,7 +1,5 @@
 //Declaracion de automata
 
-const plog = require("./plog");
-
 class automata{
     constructor(k,s,g,label,f,afd){
         this.k = [];//estados
