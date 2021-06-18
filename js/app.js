@@ -108,7 +108,7 @@ function iniciarAutomata(automatas, bol, tabla, enlace) { //Funcion para iniciar
 
 function iniciarCamino(bol, enlace) { // inicia el camino
     if (leerInputs(bol) == false) {
-        alert(err);
+        alert("Uno de los datos ingresados no es correcto");
         plog.warn("Uno de los datos ingresado no es correcto");
     } else {
         enlace.disabled = 'disabled';
