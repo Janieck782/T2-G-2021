@@ -16,12 +16,65 @@ body{
 
 font-family: 'Noto Sans',sans-serif;
 text-align: center;
+background: rgb(38,122,107);
+background: radial-gradient(circle, rgba(38,122,107,1) 0%, rgba(29,55,126,1) 100%);
 
 }
 
-.Automatas{
-  display: grid;
-  grid-template-columns: auto auto;
-  background-color: gray;
-  text-align: center;
+
+.contenedores{
+  background-color: white;
+  margin: 10px 10px ;
+  border-radius: 10px;
+  padding: 3px;
+  
 }
+
+@media (min-width: 768px) {
+  .Automatas{
+  
+    display: grid;
+    grid-template-columns: auto auto;
+    text-align: center;
+  
+  }
+}
+
+@media (min-width: 768px) {
+  .resultados{
+  
+    display: grid;
+    grid-template-columns: auto auto;
+    text-align: center;
+  
+  }
+}
+
+p{
+  display:inline; 
+  font-size: 140%;
+  }
+
+footer{
+  font-size: 50%;
+}
+
+h1{
+  font-family: 'Hepta Slab', serif;
+  color: white;
+  padding: 10px;
+
+}
+
+hr {
+  color: black;
+  background-color: black;
+  padding: 5px;
+
+}
+
+
+
+
+
+
