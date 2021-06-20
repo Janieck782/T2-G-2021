@@ -8,9 +8,9 @@ function TablaEstados(automatas) {
     // console.log("Tabla de estados vacía: ");
     // console.log(aux);
 
-    for (let i = 0; i < cant; i++) { //Se genera la tabla
+    for (i = 0; i < cant; i++) { //Se genera la tabla
         aux[i] = [];
-        for (let j = 0; j < cant; j++) {
+        for (j = 0; j < cant; j++) {
             aux[i][j] = null;
         }
     }
@@ -67,13 +67,13 @@ function TablaEstados(automatas) {
     // console.table(aux);
 
     //------Deja los datos solo con números--------------
-    var camino_num = JSON.parse( JSON.stringify( automatas.g ) );
-    camino_num = Separador_caracter(camino_num);
+  /*  var camino_num = JSON.parse( JSON.stringify( automatas.g ) );
+    camino_num = Separador_caracter(camino_num); ELIMINAR *
     var estados_num = Separador_caracter(automatas.k);
-    estados_num = Separador_caracter(estados_num);
+    estados_num = Separador_caracter(estados_num); */
     //----------------------------------------------------
 
-    var arr_estado = [];
+ /*   var arr_estado = [];
     var sum = 0;
 
     for(i = 0; i < automatas.k.length; i++) {   //Multiplica los estados por la cantidad de alfabetos
@@ -82,7 +82,7 @@ function TablaEstados(automatas) {
             sum++;
         }
     }
-
+*/
     var caminosky = tabla_caminos(automatas.g, automatas);
 
     var tabla_mezclada;
@@ -90,7 +90,7 @@ function TablaEstados(automatas) {
     tabla_mezclada = creacion_conj(caminosky, automatas.f);
 
 
-    var cont = 1;
+   
 
     for(i = 0; i < aux.length; i++) {
         for(j = 0; j < aux.length; j++) {
@@ -104,7 +104,7 @@ function TablaEstados(automatas) {
             }
         }
     }
-    var aux2 = JSON.parse( JSON.stringify( aux ) );
+        aux2 = JSON.parse( JSON.stringify( aux ) );
 
 
     for(i = 0; i < aux.length; i++) {
@@ -155,8 +155,8 @@ function TablaEstados(automatas) {
 
 
     //Crea una matriz bidemensional con una columna con id de cada camino
-    caminosky2 = new Array(automatas.k.length);
-    var cont = 0, aca = 0;
+//  caminosky2 = new Array(automatas.k.length); ELIMINAR
+    
 
     let aiuda2 = aiuda.filter((item,index)=>{
         return aiuda.indexOf(item) === index;

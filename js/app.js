@@ -18,6 +18,8 @@ let automata2 = new automata;
 
 let automataUnion = new automata;
 
+let automataCon = new automata;
+
 
 
 //Variables
@@ -217,9 +219,12 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
         plog.info(`Se finalizo el automata N°${bol}`);
 
         if(automataFinalizado == 2 ){
+            
+            //here mati
+
             imprimirUnion(automata1,automata2,res);
             plog.info("Se genero la union de dos automatas");
-
+            imprimirConcatenacion(automata1,automata2,res);
             //simplificaciion
 
             //1
@@ -258,11 +263,73 @@ function transformarAFD(automatas){
     automatas.afd = true;
 }
 
+function imprimirConcatenacion(automataA,automataB,imgZone){
+    let largoEstados = automataA.k.length+automataB.k.length;
+    let definirFinal =[];
+    //automataCon
+    for(let i = 0; i < largoEstados; i ++){
+        automataCon.k.push(`q${i}`);
+    }   //estados
+
+    automataCon.s = automata1.s;//alfabeto
+    automataCon.afd = true;
+    
+
+    for(let u = 0; u < automata1.f.length ; u++){
+        for(let v  = 0; v < automataCon.k.length ; v++){
+            if (automata1.f[u]==automataCon.k[v]){
+                for(let l = 0; l < automataCon.s.length ;l++){
+                    definirFinal.push(true);
+                }
+            }else{
+                for(let f = 0; f < automataCon.s.length ;f++){
+                    definirFinal.push(false);
+                }
+            }
+        }
+    }
+
+    console.log(definirFinal);
+
+    for(let w = 0 ; w < automata1.g.length ; w++ ){
+        if(definirFinal[w] == true){
+            automataCon.g.push(`q${automata1.s.length}`);
+        }
+        if(definirFinal[w] == false){
+            automataCon.g.push(automata1.g[w]);    
+        }
+    }
+
+    for(let y = 0; y < automata2.g.length; y++){
+        automataCon.g.push(`q${Number.parseInt (automata2.g[y].charAt(1)) + automata1.k.length}`);
+    }
+
+    for(let z = 0 ; z < automata2.f.length ; z++) {
+        automataCon.f.push(`q${Number.parseInt(automata2.f[z].charAt(1))+automata1.k.length}`);
+    }
+
+    var texto2 = document.createElement("h4");
+    texto2.innerHTML = ` La concatenacion es:`; //formato linea
+    res.appendChild(texto2);
+
+    imprimirImagen(automataCon,imgZone);
+
+    //[0:55 p. m., 19/6/2021] Luciano Donoso: Los finales del 1 apuntan al inicial del 2
+    //[0:55 p. m., 19/6/2021] Luciano Donoso: Después de eso dejan de ser finales
+
+
+
+
+
+    console.log(automataCon);
+
+}
+
 
 function imprimirUnion(automataA,automataB,imgZon){
     let largoEstados = automataA.k.length+automataB.k.length;
     let largoAlfabeto = 0;
-    let largoCaminos = automataA.g.length+automataB.g.length;
+  //  let largoCaminos = automataA.g.length+automataB.g.length;  ELIMINAR NO USO
     
     //automataUnion
     let contQ = 0;
@@ -347,7 +414,7 @@ function imprimirComplemento(automatas,zonaImg,bol){
     let graph = `digraph{ poi -> q0 [color=red,style=dotted] ${salto}`;
     let o = 0;
     let esAfd = automatas.afd;
-    let nuevoF=[];
+
 
     
 
@@ -384,9 +451,6 @@ function imprimirComplemento(automatas,zonaImg,bol){
         } else {
             for (let i = 0; i < automatas.k.length; i++) { //estados
                 for (let j = 0; j < automatas.s.length; j++) { //alfabeto
-                    if (automatas.g[o] == 0) {
-
-                    }
                     if (automatas.g[o] != 0) {
                         //k estados, s alfabeto, g caminos, label nombre arista, f final
                         graph += `${automatas.k[i]} -> ${automatas.g[o]} [label="${automatas.label[o]}"] ${salto} `;
@@ -462,9 +526,7 @@ function imprimirImagen(automatas, zonaImg) { // Funcion que imprime automatas s
         } else {
             for (let i = 0; i < automatas.k.length; i++) { //estados
                 for (let j = 0; j < automatas.s.length; j++) { //alfabeto
-                    if (automatas.g[o] == 0) {
-
-                    }
+                  
                     if (automatas.g[o] != 0) {
                         //k estados, s alfabeto, g caminos, label nombre arista, f final
                         graph += `${automatas.k[i]} -> ${automatas.g[o]} [label="${automatas.label[o]}"] ${salto} `;
@@ -572,10 +634,10 @@ function inputCaminos(estados, tabla, bol) { //Funcion que determina los camnino
         }
     }
     if (esAfd == false) {
-        var texto1 = document.createElement("h4"); //crea linea de texto
+        texto1 = document.createElement("h4"); //crea linea de texto
         var texto2 = document.createElement("h5"); //crea linea de texto
         var texto3 = document.createElement("h5"); //crea linea de texto
-        var salto = document.createElement("br");
+        salto = document.createElement("br");
         texto1.innerHTML = `4.Ingrese el estado a recorrer de llegada por cada camino.`; //formato linea
         texto2.innerHTML = `"*0 = vacio"`; //formato linea
         texto3.innerHTML = `Seleccione la casilla euler para intercambiar alfabeto por euler`; //formato linea
@@ -590,7 +652,7 @@ function inputCaminos(estados, tabla, bol) { //Funcion que determina los camnino
         for (let i = 0; i < estados; i++) {
             for (let j = 0; j < alf; j++) {
                 let letra = (String.fromCharCode(97 + j));
-                var texto = document.createElement("p"); //crea linea de texto
+                texto = document.createElement("p"); //crea linea de texto
                 var euler = document.createElement("p");
                 var inp = document.createElement("input");
                 euler.innerHTML = "Euler: ";
@@ -614,7 +676,7 @@ function inputCaminos(estados, tabla, bol) { //Funcion que determina los camnino
                 tabla.appendChild(inputNewQ); //agrega
                 tabla.appendChild(euler);
                 tabla.appendChild(inp); //agrega
-                var salto = document.createElement("br"); //salto de linea (no hay pa que)
+                salto = document.createElement("br"); //salto de linea (no hay pa que)
                 tabla.appendChild(salto); //agrega
                 g++;
             }
@@ -640,7 +702,7 @@ function leerInputs(bol) { //lee y recolecta los inputs --- standBy
 
     let alf = tamañoAlfabeto();
     let estadoss = 0;
-
+    let esAfd;
     if (bol == 1) {
         estadoss = estados1;
         trans1 = [];
@@ -839,30 +901,18 @@ function tamañoAlfabeto() { //Funcion que recupera el tamaño del alfabeto
     }
 }
 
-function asignarAlfabeto(automatas, bol) { //Funcion que asigna el alfabeto
+ function asignarAlfabeto(automatas, bol) { //Funcion que asigna el alfabeto
     let aux = tamañoAlfa,
         i;
-    //var tipo = tipo_alfa(),
-    // const cont = 0;
+
     automatas.s = []
-    // if (tipo == false) {
+
     for (i = 0; i < aux; i++) {
         automatas.s.push(String.fromCharCode(97 + i));
-        if (bol == 1) {
-            alfabeto1.push(String.fromCharCode(97 + i));
-        }
-        if (bol == 2) {
-            alfabeto2.push(String.fromCharCode(97 + i));
-        }
+      
     }
-
-    /*} else {
-        for (i = 0; i < aux; i++) {
-            automatas.s.push(cont);
-            cont++;
-        }
-    }*/
-}
+    
+} 
 
 function imprimirAlfabeto() { //Funcion que da a conocer el alfabeto
     let aux = tamañoAlfabeto();
@@ -893,7 +943,8 @@ function asignarAFD(bol) { //Funcion que define AFD o AFND
 
     if(aux == 0 ){
         return true;
-    }if(aux == 1){
+    } 
+    if(aux == 1){
         return false;
     }  
     
