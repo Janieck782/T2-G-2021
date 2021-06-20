@@ -1,0 +1,7 @@
+simplificar.js 
+l: 70-71
+l: 76-85
+l: 158
+app.js
+l: 897-920
+
