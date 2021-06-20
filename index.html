@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trabajo N°2 │ GRAFOS Y LENGUAJES FORMALES</title>
+  <title>Trabajo N°2 | Automatas </title>
   <link rel="shortcut icon" href="https://img.icons8.com/fluent/48/000000/university.png" />
 
   <!--normalize.css-->
@@ -14,7 +14,11 @@
   <!--Fuente Noto Sans-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+  <!--Fuente Hepta-->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@300;500&display=swap" rel="stylesheet">
   <!-- Css-->
+
   <link rel="preload" href="css/styles.css" as="style">
   <link rel="stylesheet" href="css/styles.css">
   <!--Bootstrap-->
@@ -24,12 +28,19 @@
     integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     crossorigin="anonymous"></strong>
 
+      <!--JavaScript-->
+  <script src="js/plog.js"></script>
+  <script src="js/simplificar.js"></script>
+  <script src="js/interseccion.js"></script>
+
+
 </head>
 
 <body>
-  <div class="contenedores">
-    <h1>Trabajo N°2 | GRAFOS Y LENGUAJES FORMALES </h1>
-
+  <hr>
+    <h1>Trabajo N°2 - Automatas</h1>
+    <hr>
+    <div class="contenedores">
     <h4>1.Largo del Alfabeto.</h4>
 
     <!--Alfabeto-->
@@ -37,19 +48,18 @@
     <button class="btn-grad" onclick="imprimirAlfabeto(),desactiva_enlace(this);">Continuar</button>
     <div id="alfabetoDescripcion"></div>
 
-    <h4>2.Tipo de Automata.</h4>
-    <!--Tipo (AFD o AFND)-->
-    <select id="AFD" name="opciones">
-      <option value="0">AFD</option>
-      <option value="1">AFND</option>
-
-    </select>
   </div>
 
   <div class="Automatas">
     <!--Seccion Automatas-->
     <div class="A1 contenedores">
-      <h4>Automata N°1</h4>
+      <h4>Automata N°1</h4>    
+      <h4>2.Tipo de Automata.</h4>
+      <!--Tipo (AFD o AFND)-->
+      <select id="AFD-1" name="opciones">
+        <option value="0">AFD</option>
+        <option value="1">AFND</option>
+      </select>
       <!--Seccion Automata 1-->
       <h4>3.Ingrese cantidad de estados.</h4>
       <p id="imCami1"></p>
@@ -62,6 +72,11 @@
 
     <div class="A2 contenedores">
       <h4>Automata N°2</h4>
+      <h4>2.Tipo de Automata.</h4>
+      <select id="AFD-2" name="opciones">
+        <option value="0">AFD</option>
+        <option value="1">AFND</option>
+      </select>
       <!--Seccion Automata 2-->
       <h4>3.Ingrese cantidad de estados</h4>
       <p id="imCami2"></p>
@@ -70,6 +85,10 @@
       <div id="tablaTransicion2" class="tablas"></div>
       <div id="finalIn2"></div>
       <div id="imagen2"></div>
+    </div>
+
+    <div>
+      <button id="iniciarinter" class="btn-grad" onclick="Imprimir_Union(automata1, automata2);" >interseccion</button>
     </div>
 
   </div>
@@ -125,7 +144,6 @@
   </footer>
 
   <!--JavaScript-->
-  <script src="js/simplificar.js"></script>
   <script src="js/app.js"></script>
 
 </body>
