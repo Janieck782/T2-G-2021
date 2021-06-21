@@ -225,6 +225,8 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
             imprimirUnion(automata1,automata2,res);
             plog.info("Se genero la union de dos automatas");
             imprimirConcatenacion(automata1,automata2,res);
+
+            Imprimir_interseccion(automata1, automata2);
             //simplificaciion
 
             //1
@@ -289,7 +291,6 @@ function imprimirConcatenacion(automataA,automataB,imgZone){
         }
     }
 
-    console.log(definirFinal);
 
     for(let w = 0 ; w < automata1.g.length ; w++ ){
         if(definirFinal[w] == true){
@@ -317,11 +318,6 @@ function imprimirConcatenacion(automataA,automataB,imgZone){
     //[0:55 p. m., 19/6/2021] Luciano Donoso: Los finales del 1 apuntan al inicial del 2
     //[0:55 p. m., 19/6/2021] Luciano Donoso: Después de eso dejan de ser finales
 
-
-
-
-
-    console.log(automataCon);
 
 }
 
