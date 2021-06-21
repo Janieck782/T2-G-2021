@@ -47,6 +47,10 @@ function add_complemento(automatas) {
     }
 
     automatas.f = JSON.parse( JSON.stringify( new_finals ) );
+    
+    automatas.f = automatas.f.filter((item,index)=>{
+        return automatas.f.indexOf(item) === index;
+      })
 
     console.table(automatas);
     return automatas;
@@ -60,6 +64,9 @@ function Union(automataA,automataB){
     //automataUnion
     let contQ = 0;
     //let letra = (String.fromCharCode(97 + i));
+    let q, i, v, l, y, t;
+
+    var automataUnion = new automata;
 
     if( automataA.s.length > automataB.s.length ){
         largoAlfabeto = automataA.s.length;
@@ -67,12 +74,12 @@ function Union(automataA,automataB){
         largoAlfabeto = automataB.s.length;
     }
 
-    for (let q = 0; q < largoAlfabeto; q ++){
+    for (q = 0; q < largoAlfabeto; q ++){
         let letra = (String.fromCharCode(97 + q));
         automataUnion.s.push(`${letra}`);
     }
 
-    for (let i = 0; i < largoEstados+1; i++){
+    for (i = 0; i < largoEstados+1; i++){
         automataUnion.k.push(`q${i}`);
     }
 
@@ -80,47 +87,51 @@ function Union(automataA,automataB){
     automataUnion.g.push(`q${automata1.k.length+1}`);//recorremos el automata 1
     automataUnion.label.push(`Eu`);//recorremos el automata 1
     automataUnion.label.push(`Eu`);//recorremos el automata 1
-    for (let v = 0 ; v < largoAlfabeto-2; v++ ){
+    for (v = 0 ; v < largoAlfabeto-2; v++ ){
         automataUnion.label.push(0);
     }
 
-    for (let l = 0 ; l < largoAlfabeto-2; l++ ){
+    for (l = 0 ; l < largoAlfabeto-2; l++ ){
         automataUnion.g.push(0);
     }
 
-    for (let v = 0 ; v < automata1.g.length; v++ ){
+    for (v = 0 ; v < automata1.g.length; v++ ){
         automataUnion.g.push(`q${Number.parseInt(automata1.g[v].charAt(1))+1}`);
         contQ++;
     }
     
-    for (let u = 0 ; u < automata2.g.length; u++ ){
+    for (u = 0 ; u < automata2.g.length; u++ ){
         automataUnion.g.push(`q${Number.parseInt(automata2.g[u].charAt(1))+automata1.k.length+1}`);
     }
 
 
-    for(let y = 0; y < largoEstados; y++){
-        for(let  t = 0 ; t < largoAlfabeto; t++){
+    for(y = 0; y < largoEstados; y++){
+        for(t = 0 ; t < largoAlfabeto; t++){
             automataUnion.label.push(automataUnion.s[t]);
         }
     }
 
-    for (let v = 0 ; v < automata1.f.length; v++ ){
+    for (v = 0 ; v < automata1.f.length; v++ ){
         automataUnion.f.push(`q${Number.parseInt(automata1.f[v].charAt(1))+1}`);
         contQ++;
     }
     
-    for (let u = 0 ; u < automata2.f.length; u++ ){
+    for (u = 0 ; u < automata2.f.length; u++ ){
         automataUnion.f.push(`q${Number.parseInt(automata2.f[u].charAt(1))+automata1.k.length+1}`);
-
     }
 
+    automataUnion.f = automataUnion.f.filter((item,index)=>{
+        return automataUnion.f.indexOf(item) === index;
+      })
+
     automataUnion.afd = false;
-    
+    console.table(automataUnion);
     return automataUnion;
 }
 
 function Imprimir_Union(automata1, automata2) {
     var union = interseccion(automata1, automata2);
+    const res3 = document.querySelector("#ResultadosInter");
     imprimirImagen(union, res3);
 
 
