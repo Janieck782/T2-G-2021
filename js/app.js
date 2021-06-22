@@ -291,7 +291,7 @@ function imprimirConcatenacion(automataA,automataB,imgZone){
 
     for(let w = 0 ; w < automata1.g.length ; w++ ){
         if(definirFinal[w] == true){
-            automataCon.g.push(`q${automata1.s.length}`);
+            automataCon.g.push(`q${automata1.k.length}`);
         }
         if(definirFinal[w] == false){
             automataCon.g.push(automata1.g[w]);    
@@ -309,6 +309,10 @@ function imprimirConcatenacion(automataA,automataB,imgZone){
     var texto2 = document.createElement("h4");
     texto2.innerHTML = ` La concatenacion es:`; //formato linea
     res.appendChild(texto2);
+
+    console.log("info")
+    console.log(automataCon);
+    console.log(definirFinal);
 
     imprimirImagen(automataCon,imgZone);
 
