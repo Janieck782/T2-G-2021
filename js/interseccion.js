@@ -1,33 +1,50 @@
+var cont;
+
 function interseccion(automata1, automata2) {
-    if(automata1.afd != true || automata2.afd != true) {
-        alert("Autómata no es AFD");
-        return 0;
-    }
+    // if(automata1.afd != true || automata2.afd != true) {
+    //     alert("Simplificación: Autómata no es AFD");
+        
+    //     return 0;
+    // }
+    
 
     if(automata1.s.length%2 != 0 || automata2.s.length%2 != 0) {
         alert("Alfabeto no es par");
-        return 0;
+        cont = 1;
     }
 
     if(automata1.k.length%2 != 0 && automata2.k.length%2 != 0) {
         alert("Números de a no son pares");
-        return 0;
+        cont = 2;
     }
 
+
+    //Comprueba si las funciones son AFD y si no las transforma
+    if(automata1.afd == false) {
+        automata1.afd = transformarAFDi(automata1.afd);
+    }
+    if(automata2.afd == false) {
+        automata2.afd = transformarAFDi(automata2.afd);
+    }
+
+    //Crea variable alterna
     var automatac1 = JSON.parse( JSON.stringify( automata1 ) );
     var automatac2 = JSON.parse( JSON.stringify( automata2 ) );
 
-
-    var automataco1 = add_complemento(automatac1);
+    //Se calcula el complemento de cada automata
+    var automataco1 = add_complemento(automatac1); 
     var automataco2 = add_complemento(automatac2);
 
-    console.log("Comienza la union");
+    //Se unen los automatas
     var union_autos = Union(automataco1, automataco2);
+
+    //Se transforma a AFD el automata
     var union_afd = transformarAFDi(union_autos);
 
+    //Se calcula el complemento de todos
     var inter_autos = add_complemento(union_afd);
-    console.table(inter_autos);    
-    var simplificados = TablaEstados(inter_autos);
+
+    //Se simplifica
     return inter_autos;
 }
 
@@ -52,7 +69,6 @@ function add_complemento(automatas) {
         return automatas.f.indexOf(item) === index;
       })
 
-    console.table(automatas);
     return automatas;
 }
 
@@ -125,16 +141,8 @@ function Union(automataA,automataB){
       })
 
     automataUnion.afd = false;
-    console.table(automataUnion);
+
     return automataUnion;
-}
-
-function Imprimir_Union(automata1, automata2) {
-    var union = interseccion(automata1, automata2);
-    const res3 = document.querySelector("#ResultadosInter");
-    imprimirImagen(union, res3);
-
-
 }
 
 function transformarAFDi(automatas){
@@ -155,3 +163,26 @@ function transformarAFDi(automatas){
     automatas.afd = true;
     return automatas;
 }
+
+function Imprimir_interseccion(automata1, automata2) {
+    var union = interseccion(automata1, automata2);
+    const res3 = document.querySelector("#ResultadosInter");
+    var texto3 = document.createElement("h4");
+    console.log("alo");
+    console.log(cont);
+
+    if(cont == 1) {
+        texto3.innerHTML = ` La interseccion no es posible. El alfabeto es impar`;
+        console.log("Ala");
+        res3.appendChild(texto3);
+    } else if(cont == 2) {
+        texto3.innerHTML = ` La intersección no es posible. La cantidad de a es impar`;
+        res3.appendChild(texto3);
+    } else {
+        texto3.innerHTML = ` La interseccion es:`; //formato linea
+        res3.appendChild(texto3);
+
+        imprimirImagen(union, res3);
+    }
+}
+
