@@ -9,12 +9,10 @@ function interseccion(automata1, automata2) {
     
 
     if(automata1.s.length%2 != 0 || automata2.s.length%2 != 0) {
-        alert("Alfabeto no es par");
         cont = 1;
     }
 
     if(automata1.k.length%2 != 0 && automata2.k.length%2 != 0) {
-        alert("Números de a no son pares");
         cont = 2;
     }
 
