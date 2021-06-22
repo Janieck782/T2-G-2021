@@ -6,8 +6,6 @@ function interseccion(automata1, automata2) {
         
     //     return 0;
     // }
-    
-
     if(automata1.s.length%2 != 0 || automata2.s.length%2 != 0) {
         cont = 1;
     }
@@ -15,7 +13,6 @@ function interseccion(automata1, automata2) {
     if(automata1.k.length%2 != 0 && automata2.k.length%2 != 0) {
         cont = 2;
     }
-
 
     //Comprueba si las funciones son AFD y si no las transforma
     if(automata1.afd == false) {
@@ -30,7 +27,7 @@ function interseccion(automata1, automata2) {
     var automatac2 = JSON.parse( JSON.stringify( automata2 ) );
 
     //Se calcula el complemento de cada automata
-    var automataco1 = add_complemento(automatac1); 
+    var automataco1 = add_complemento(automatac1);
     var automataco2 = add_complemento(automatac2);
 
     //Se unen los automatas
@@ -48,24 +45,33 @@ function interseccion(automata1, automata2) {
 
 function add_complemento(automatas) {
     var finals = JSON.parse( JSON.stringify( automatas.f ) );
+    console.table(automatas.f);
     var new_finals = [];
     let i, j;
     var aux;
+    
+    new_finals = [];
 
     for(i = 0; i < automatas.k.length; i++) {
+        var sum = 0;
         for(j = 0; j < finals.length; j++) {
-            if(automatas.k[i] != finals[j]) {
-                aux = automatas.k[i];
-                new_finals.push(aux);
+            if(automatas.k[i] == finals[j]) {
+                sum++;
             }
+        }
+        if(sum != 0) {
+            var aux = automatas.k[i];
+            new_finals.push(aux);
         }
     }
 
+    automatas.f = [];
+
     automatas.f = JSON.parse( JSON.stringify( new_finals ) );
-    
+
     automatas.f = automatas.f.filter((item,index)=>{
         return automatas.f.indexOf(item) === index;
-      })
+    })
 
     return automatas;
 }
@@ -136,7 +142,8 @@ function Union(automataA,automataB){
 
     automataUnion.f = automataUnion.f.filter((item,index)=>{
         return automataUnion.f.indexOf(item) === index;
-      })
+    })
+
 
     automataUnion.afd = false;
 
@@ -167,10 +174,8 @@ function Imprimir_interseccion(automata1, automata2) {
     const res3 = document.querySelector("#ResultadosInter");
     var texto3 = document.createElement("h4");
 
-
     if(cont == 1) {
         texto3.innerHTML = ` La interseccion no es posible. El alfabeto es impar`;
-
         res3.appendChild(texto3);
     } else if(cont == 2) {
         texto3.innerHTML = ` La intersección no es posible. La cantidad de a es impar`;
