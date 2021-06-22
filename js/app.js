@@ -238,10 +238,7 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
             imprimirImagen(automata1, res1);
             imprimirImagen(automata2, res2);
 
-            //2
-            
-            
-            
+            //2            
 
         }
     }
@@ -946,6 +943,34 @@ function asignarAFD(bol) { //Funcion que define AFD o AFND
     
 
 }
+
+
+//función para descargar archivo
+const DescargarLogs = () =>{
+    var aux = "";
+    var events = storage.getEvents();
+    for (var i = 0; i < events.length - 1; i++) {
+        aux = aux + JSON.stringify(events[i]) + "\n";
+        }
+  
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:events/plain;charset=utf-8," + encodeURIComponent(aux)
+    );
+    element.setAttribute("download", "log.txt");
+    console.log(element);
+    element.style.display = "none";
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
+  
+ 
+
+
 
 /*function tipo_alfa() {
     var aux = document.getElementById("alfab").value;
