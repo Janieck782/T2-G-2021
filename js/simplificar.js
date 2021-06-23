@@ -41,9 +41,9 @@ function Simplificar(automatas) {
     }
 
     for (i = 0; i < automatas.k.length; i++) {
-        for(j = 0; j < automatas.k.length - 1;j++) {
-            if(aux[i][j] == null && aux[i][j] != "x") {
-                if(validador[i] != validador[j]) {
+        for (j = 0; j < automatas.k.length - 1; j++) {
+            if (aux[i][j] == null && aux[i][j] != "x") {
+                if (validador[i] != validador[j]) {
                     aux[i][j] = "X";
                 }
             }
@@ -56,11 +56,12 @@ function Simplificar(automatas) {
 
     tabla_mezclada = creacion_conj(caminosky, automatas.f);
 
-    for(i = 0; i < aux.length; i++) {
-        for(j = 0; j < aux.length; j++) {
+
+    for (i = 0; i < aux.length; i++) {
+        for (j = 0; j < aux.length; j++) {
             if (aux[i][j] != "-" && aux[i][j] != "X") {
-                for(let a = 0; a < tabla_mezclada.length; a++) {
-                    if(tabla_mezclada[i][a] != tabla_mezclada[j][a]) {
+                for (let a = 0; a < tabla_mezclada.length; a++) {
+                    if (tabla_mezclada[i][a] != tabla_mezclada[j][a]) {
                         aux[i][j] = "X";
                         break;
                     }
@@ -68,18 +69,18 @@ function Simplificar(automatas) {
             }
         }
     }
-        aux2 = JSON.parse( JSON.stringify( aux ) );
+    aux2 = JSON.parse(JSON.stringify(aux));
 
-    for(i = 0; i < aux.length; i++) {
-        for(j = 0; j < aux.length; j++) {
-            if(aux[i][j] == null) {
-                for(let b = 0; b < automatas.s.length; b++) {
+    for (i = 0; i < aux.length; i++) {
+        for (j = 0; j < aux.length; j++) {
+            if (aux[i][j] == null) {
+                for (let b = 0; b < automatas.s.length; b++) {
                     var pri = caminosky[i][b];
                     var seg = caminosky[j][b];
                     pri = pri.slice(1);
                     seg = seg.slice(1);
 
-                    if(aux2[pri][seg] == "X" || aux2 [seg][pri] == "X") {
+                    if (aux2[pri][seg] == "X" || aux2[seg][pri] == "X") {
                         aux[i][j] = "X";
                     }
                 }
@@ -89,57 +90,58 @@ function Simplificar(automatas) {
 
     var aiuda = [];
 
-    for(i = 0; i < aux.length; i++) {
-        for(j = 0; j < aux.length; j++) {
-            if(aux[i][j] == null) {
+    for (i = 0; i < aux.length; i++) {
+        for (j = 0; j < aux.length; j++) {
+            if (aux[i][j] == null) {
                 var aux1 = "q" + i;
                 aiuda.push(i);
 
-                removeItemFromArr(automatas.k , aux1);
-                removeItemFromArr(automatas.f , aux1);
+                removeItemFromArr(automatas.k, aux1);
+                removeItemFromArr(automatas.f, aux1);
 
-                for(let a = 0; a < caminosky.length; a++) {
-                    for(let b = 0; b < automatas.s.length; b++) {
-                        if(caminosky[a][b] == aux1) {
+                for (let a = 0; a < caminosky.length; a++) {
+                    for (let b = 0; b < automatas.s.length; b++) {
+                        if (caminosky[a][b] == aux1) {
                             caminosky[a][b] = "q" + j;
                         }
                     }
                 }
             }
         }
-    }   
+    }
 
-    let aiuda2 = aiuda.filter((item,index)=>{
+    let aiuda2 = aiuda.filter((item, index) => {
         return aiuda.indexOf(item) === index;
     })
 
     aiuda2.reverse();
 
-    for(i = 0; i < aiuda2.length; i++) {
+    for (i = 0; i < aiuda2.length; i++) {
         caminosky.splice(aiuda2[i], 1);
     }
 
     automatas.g = [];
 
-    for(i = 0; i < caminosky.length; i ++) {
-        for(j = 0; j < automatas.s.length; j++) {
+    for (i = 0; i < caminosky.length; i++) {
+        for (j = 0; j < automatas.s.length; j++) {
             automatas.g.push(caminosky[i][j]);
         }
     }
     plog.info("Se realizó la simplificación de un autómata");
 }
 
-function removeItemFromArr ( arr, item ) {
-    var i = arr.indexOf( item );
- 
-    if ( i !== -1 ) {
-        arr.splice( i, 1 );
+function removeItemFromArr(arr, item) {
+    var i = arr.indexOf(item);
+
+    if (i !== -1) {
+        arr.splice(i, 1);
     }
 }
 
 function tabla_caminos(camino, automatas) {
     var aux = [];
     var sum = 0;
+
     for (let i = 0; i < automatas.k.length; i++) { //Se genera la tabla
         aux[i] = [];
         for (let j = 0; j < automatas.s.length; j++) {
@@ -157,21 +159,22 @@ function creacion_conj(cam, final) {
 
     for (let i = 0; i < cam.length; i++) {
         aux[i] = [];
-        for (let j = 0; j < cam[i].length; j++) { 
+        for (let j = 0; j < cam[i].length; j++) {
             aux[i][j] = "Y";
         }
     }
 
-    for(let i = 0; i < cam.length; i++) {
-        for(let j = 0; j < cam[i].length; j++) {
-            for(let a = 0; a < final.length; a++) {
-                if(cam[i][j] == final[a]) {
-                    
+    for (let i = 0; i < cam.length; i++) {
+        for (let j = 0; j < cam[i].length; j++) {
+            for (let a = 0; a < final.length; a++) {
+                if (cam[i][j] == final[a]) {
+
                     aux[i][j] = "X";
                 }
             }
         }
-    }    
+    }
+
     return aux;
 }
 
@@ -193,11 +196,10 @@ function Separador_caracter(array) {
     var aux = [];
     var poo;
 
-    for(let i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++) {
         poo = array[i];
-        aux[i] = poo.replace(/\D/g,'');
+        aux[i] = poo.replace(/\D/g, '');
     }
-
 
     return aux;
 }
