@@ -45,13 +45,10 @@ function interseccion(automata1, automata2) {
 
 function add_complemento(automatas) {
     var finals = JSON.parse( JSON.stringify( automatas.f ) );
-    console.table(automatas.f);
     var new_finals = [];
     let i, j;
     var aux;
     
-    new_finals = [];
-
     for(i = 0; i < automatas.k.length; i++) {
         var sum = 0;
         for(j = 0; j < finals.length; j++) {
@@ -59,8 +56,8 @@ function add_complemento(automatas) {
                 sum++;
             }
         }
-        if(sum != 0) {
-            var aux = automatas.k[i];
+        if(sum == 0) {
+            aux = automatas.k[i];
             new_finals.push(aux);
         }
     }
@@ -84,7 +81,7 @@ function Union(automataA,automataB){
     //automataUnion
     let contQ = 0;
     //let letra = (String.fromCharCode(97 + i));
-    let q, i, v, l, y, t;
+    let q, i, v, l, y, t,u;
 
     var automataUnion = new automata;
 
@@ -176,15 +173,22 @@ function Imprimir_interseccion(automata1, automata2) {
 
     if(cont == 1) {
         texto3.innerHTML = ` La interseccion no es posible. El alfabeto es impar`;
+        plog.warn("Intersección no es posible por que el alfabeto es impar");
+
         res3.appendChild(texto3);
     } else if(cont == 2) {
         texto3.innerHTML = ` La intersección no es posible. La cantidad de a es impar`;
+        plog.warn("La intersección no es posible por que la cantidad de a es impar");
+
         res3.appendChild(texto3);
     } else {
         texto3.innerHTML = ` La interseccion es:`; //formato linea
         res3.appendChild(texto3);
 
         imprimirImagen(union, res3);
+        plog.info("Se realizó la intersección de los autómatas");
+
     }
+    
 }
 

@@ -20,7 +20,9 @@ let automataUnion = new automata;
 
 let automataCon = new automata;
 
+let auto1 = new automata;
 
+let auto2  = new automata;
 
 //Variables
 let tamañoAlfa = 0;
@@ -83,7 +85,6 @@ plog.useStorage(storage);
  
 // Cuando queramos, podemos recuperar los mensajes que se han añadido al log
 var events = storage.getEvents();
-console.log(events);
 
 //Funciones Formulario
 
@@ -177,7 +178,11 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
     texto3.innerHTML = ` La simplificacion es:`; //formato linea
     var texto4 = document.createElement("h4");
     texto4.innerHTML = ` La simplificacion es:`; //formato linea
-    
+
+    var texto5 = document.createElement("h4");
+    texto5.innerHTML = ` Se simplifico la union:`; //formato linea
+    var texto6 = document.createElement("h4");
+    texto6.innerHTML = ` Se simplifico la concatenacion:`; //formato linea    
     
     if (asignarFinales(bol) == false) {
         alert("Se debe ingresar al menos un final");
@@ -186,57 +191,62 @@ function iniciarImagen(bol, enlace) { // se activa al seleccionar el boton
         enlace.disabled = 'disabled';
         asignarFinales(bol);
         if (bol == 1) {
-            console.log(automata1);
             zonImg1.appendChild(texto1); //agrega la linea
             imprimirImagen(automata1, zonImg1);
+            auto1 = JSON.parse( JSON.stringify( automata1 ) );
+
             imprimirComplemento(automata1, res1,1);
 
             if(automata1.afd == false){
                 transformarAFD(automata1);
                 res1.appendChild(texto2);
                 imprimirImagen(automata1, res1);
-            
-            }
-
-            
-            
+            }    
         }
+
         if (bol == 2) {
-            console.log(automata2);
-            zonImg2.appendChild(texto1); //agrega la linea
+            zonImg2.appendChild(texto1); //Agrega la línea
             imprimirImagen(automata2, zonImg2);
+            auto2 = JSON.parse( JSON.stringify( automata2 ) );
             imprimirComplemento(automata2,res2,2);
             if(automata2.afd == false){
                 transformarAFD(automata2);
                 res2.appendChild(texto2);
                 imprimirImagen(automata2, res2);
             }
-            //simplificacion
-            
-
+            //Simplificación
         }
         automataFinalizado++;
         plog.info(`Se finalizo el automata N°${bol}`);
 
         if(automataFinalizado == 2 ){
-            
-            //here mati
 
             imprimirUnion(automata1,automata2,res);
             plog.info("Se genero la union de dos automatas");
             imprimirConcatenacion(automata1,automata2,res);
 
-            Imprimir_interseccion(automata1, automata2);
+            Imprimir_interseccion(auto1, auto2);
             //simplificaciion
 
             //1
-            TablaEstados(automata1);
-            TablaEstados(automata2);
+            Simplificar(automata1);
+            Simplificar(automata2);
             res1.appendChild(texto3);
             res2.appendChild(texto4);
             plog.info("Se simplificaron los automatas");
             imprimirImagen(automata1, res1);
             imprimirImagen(automata2, res2);
+            
+
+            //simplificación
+            transformarAFD(automataUnion);
+            Simplificar(automataUnion);
+            Simplificar(automataCon);
+            res.appendChild(texto5);
+            imprimirImagen(automataUnion,res);
+            res.appendChild(texto6);
+            imprimirImagen(automataCon,res);
+
 
             //2            
 
@@ -310,14 +320,8 @@ function imprimirConcatenacion(automataA,automataB,imgZone){
     texto2.innerHTML = ` La concatenacion es:`; //formato linea
     res.appendChild(texto2);
 
-    console.log("info")
-    console.log(automataCon);
-    console.log(definirFinal);
-
     imprimirImagen(automataCon,imgZone);
 
-    //[0:55 p. m., 19/6/2021] Luciano Donoso: Los finales del 1 apuntan al inicial del 2
-    //[0:55 p. m., 19/6/2021] Luciano Donoso: Después de eso dejan de ser finales
 
 
 }
@@ -391,8 +395,6 @@ function imprimirUnion(automataA,automataB,imgZon){
 
     automataUnion.afd = false;
 
-
-    console.log(automataUnion);
     var texto2 = document.createElement("h4");
     texto2.innerHTML = ` La union es:`; //formato linea
     res.appendChild(texto2)
@@ -411,12 +413,6 @@ function imprimirComplemento(automatas,zonaImg,bol){
     let graph = `digraph{ poi -> q0 [color=red,style=dotted] ${salto}`;
     let o = 0;
     let esAfd = automatas.afd;
-
-
-    
-
- 
-
 
     if (esAfd == true) {
         if (automatas.k.length == 1) {
@@ -952,7 +948,7 @@ function asignarAFD(bol) { //Funcion que define AFD o AFND
 //función para descargar archivo
 const DescargarLogs = () =>{
     var aux = "";
-    var events = storage.getEvents();
+    events = storage.getEvents();
     for (var i = 0; i < events.length - 1; i++) {
         aux = aux + JSON.stringify(events[i]) + "\n";
         }
@@ -963,7 +959,6 @@ const DescargarLogs = () =>{
       "data:events/plain;charset=utf-8," + encodeURIComponent(aux)
     );
     element.setAttribute("download", "log.txt");
-    console.log(element);
     element.style.display = "none";
     document.body.appendChild(element);
   
