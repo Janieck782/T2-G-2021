@@ -1,5 +1,6 @@
 # T2-G-2021 Automatas
 * [Version Web](https://t2-g-2021-grafos.netlify.app/) - Version web de la pagina
+* [Manual](https://www.docdroid.net/PRKfnB5/t2-glf-ejecucion-web-con-xampp-y-apachedocx-pdf) - MAnual de uso y instalacion para un servidor local
 
 TRABAJO UNIDAD II: AUTÓMATAS 
 Diseñar una aplicación web (página web) que, en base a los contenidos de la asignatura, permita: 
