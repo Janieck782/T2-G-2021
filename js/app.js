@@ -88,6 +88,7 @@ plog.useStorage(storage);
 
 // Cuando queramos, podemos recuperar los mensajes que se han añadido al log
 var events = storage.getEvents();
+console.log(events);
 
 //Funciones Formulario
 
